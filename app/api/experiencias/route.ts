@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
       
       // Si no existe, buscar en los datos iniciales
       if (!experiencia) {
-        experiencia = experienciasData.find(e => e.id === parseInt(id))
+        experiencia = experienciasData.find(e => e.id === parseInt(id)) as any
         if (experiencia) {
           saveExperiencia(experiencia)
         }
@@ -107,8 +107,8 @@ export async function PUT(request: NextRequest) {
     }
     
     const updated = {
-      ...experiencia,
-      ...body,
+      ...(experiencia as Record<string, unknown>),
+      ...(body as Record<string, unknown>),
       updatedAt: Date.now(),
     }
     

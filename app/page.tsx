@@ -21,7 +21,7 @@ import {
   ShieldCheckIcon
 } from '@heroicons/react/24/outline'
 import { useI18n } from '@/components/Providers'
-import { t } from '@/lib/i18n'
+import { t, type Locale } from '@/lib/i18n'
 import { experienciasData } from '@/lib/data'
 import { experienciasAPI } from '@/lib/api'
 import { getPremiumExperiences, getNextAvailableDate } from '@/lib/premium-experiences'
@@ -66,7 +66,7 @@ function ExperiencesCarousel({ experiences, locale }: { experiences: typeof expe
                   href={`/experiencias/${exp.id}`} 
                   className="text-primary-600 hover:text-primary-700 font-semibold"
                 >
-                  {t(locale, 'see_more')} →
+                  {t(locale as Locale, 'see_more')} →
                 </Link>
               </div>
             </div>
@@ -182,10 +182,10 @@ export default function Home() {
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-6 py-2 rounded-full font-bold text-sm mb-4 shadow-lg">
               <span>⭐</span>
-              <span>{t(locale, 'premium_experiences_badge') || 'EXPERIENCIAS PREMIUM'}</span>
+              <span>{t(locale as Locale, 'premium_experiences_badge') || 'EXPERIENCIAS PREMIUM'}</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              {t(locale, 'premium_experiences_title') || 'Experiencias Gastronómicas Exclusivas'}
+              {t(locale as Locale, 'premium_experiences_title') || 'Experiencias Gastronómicas Exclusivas'}
             </h2>
             <p className="text-lg text-gray-700 max-w-2xl mx-auto">
               Las mejores experiencias culinarias curadas especialmente para vos, en tu idioma, con tu gente, y en los lugares más exclusivos de Buenos Aires.
@@ -209,7 +209,7 @@ export default function Home() {
               href="/experiencias-premium"
               className="inline-block bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all hover:shadow-xl"
             >
-              {t(locale, 'premium_experiences_cta') || 'Ver todas las experiencias premium →'}
+              {t(locale as Locale, 'premium_experiences_cta') || 'Ver todas las experiencias premium →'}
             </Link>
           </div>
         </div>
@@ -220,10 +220,10 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
-              {t(locale, 'home_experiences_havaia_title')}
+              {t(locale as Locale, 'home_experiences_havaia_title')}
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              {t(locale, 'home_experiences_havaia_subtitle')}
+              {t(locale as Locale, 'home_experiences_havaia_subtitle')}
             </p>
           </div>
           
@@ -234,7 +234,7 @@ export default function Home() {
               href="/experiencias" 
               className="inline-block bg-primary-500 hover:bg-primary-600 text-white px-8 py-3 rounded-full font-semibold transition-colors"
             >
-              {t(locale, 'home_experiences_cta')}
+              {t(locale as Locale, 'home_experiences_cta')}
             </Link>
           </div>
         </div>
@@ -244,7 +244,7 @@ export default function Home() {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-            {t(locale, 'home_how_it_works_title')}
+            {t(locale as Locale, 'home_how_it_works_title')}
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="bg-white p-8 rounded-xl shadow-lg text-center border-2 border-gray-100 hover:shadow-xl transition-shadow overflow-hidden">
@@ -257,7 +257,7 @@ export default function Home() {
               </div>
               <h3 className="text-2xl font-bold mb-4 text-gray-900">1. Descubrí</h3>
               <p className="text-gray-600 text-lg">
-                {t(locale, 'home_how_it_works_step1_text')}
+                {t(locale as Locale, 'home_how_it_works_step1_text')}
               </p>
             </div>
             <div className="bg-white p-8 rounded-xl shadow-lg text-center border-2 border-gray-100 hover:shadow-xl transition-shadow overflow-hidden">
@@ -270,7 +270,7 @@ export default function Home() {
               </div>
               <h3 className="text-2xl font-bold mb-4 text-gray-900">2. Conectá</h3>
               <p className="text-gray-600 text-lg">
-                {t(locale, 'home_how_it_works_step2_text')}
+                {t(locale as Locale, 'home_how_it_works_step2_text')}
               </p>
             </div>
             <div className="bg-white p-8 rounded-xl shadow-lg text-center border-2 border-gray-100 hover:shadow-xl transition-shadow overflow-hidden">
@@ -283,7 +283,7 @@ export default function Home() {
               </div>
               <h3 className="text-2xl font-bold mb-4 text-gray-900">3. Viví</h3>
               <p className="text-gray-600 text-lg">
-                {t(locale, 'home_how_it_works_step3_text')}
+                {t(locale as Locale, 'home_how_it_works_step3_text')}
               </p>
             </div>
           </div>
@@ -298,10 +298,10 @@ export default function Home() {
               // Vista para usuario logueado
               <div className="text-center mb-12">
                 <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                  {t(locale, 'home_hero_logged_title', { name: user.name })} 👋
+                  {t(locale as Locale, 'home_hero_logged_title', { name: user.name })} 👋
                 </h1>
                 <p className="text-xl md:text-2xl mb-8 text-primary-100">
-                  {t(locale, 'home_hero_logged_sub')}
+                  {t(locale as Locale, 'home_hero_logged_sub')}
                 </p>
                 
                 {/* Quick Stats */}
@@ -311,14 +311,14 @@ export default function Home() {
                       <TrophyIcon className="w-6 h-6 text-yellow-300" />
                       <span className="text-2xl font-bold">{stats.points}</span>
                     </div>
-                    <p className="text-sm text-primary-100">{t(locale, 'home_hero_points')}</p>
+                    <p className="text-sm text-primary-100">{t(locale as Locale, 'home_hero_points')}</p>
                   </div>
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                     <div className="flex items-center justify-center gap-2 mb-2">
                       <SparklesIcon className="w-6 h-6 text-yellow-300" />
                       <span className="text-2xl font-bold">Nivel {stats.level}</span>
                     </div>
-                    <p className="text-sm text-primary-100">{t(locale, 'home_hero_level')}</p>
+                    <p className="text-sm text-primary-100">{t(locale as Locale, 'home_hero_level')}</p>
                   </div>
                   {stats.streak > 0 && (
                     <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
@@ -326,7 +326,7 @@ export default function Home() {
                         <FireIcon className="w-6 h-6 text-orange-300" />
                         <span className="text-2xl font-bold">{stats.streak}</span>
                       </div>
-                      <p className="text-sm text-primary-100">{t(locale, 'home_hero_streak')}</p>
+                      <p className="text-sm text-primary-100">{t(locale as Locale, 'home_hero_streak')}</p>
                     </div>
                   )}
                 </div>
@@ -337,14 +337,14 @@ export default function Home() {
                     href="/dashboard" 
                     className="bg-accent-500 hover:bg-accent-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all hover-lift ripple shadow-lg flex items-center justify-center gap-2"
                   >
-                    {t(locale, 'home_hero_go_dashboard')}
+                    {t(locale as Locale, 'home_hero_go_dashboard')}
                     <ArrowRightIcon className="w-5 h-5" />
                   </Link>
                   <Link 
                     href="/experiencias" 
                     className="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all hover-lift border-2 border-white/30"
                   >
-                    {t(locale, 'home_hero_explore_experiences')}
+                    {t(locale as Locale, 'home_hero_explore_experiences')}
                   </Link>
                 </div>
               </div>
@@ -352,27 +352,27 @@ export default function Home() {
               // Vista para usuario no logueado
               <div className="text-center">
                 <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                  {t(locale, 'home_hero_guest_title')}
+                  {t(locale as Locale, 'home_hero_guest_title')}
                 </h1>
                 <p className="text-xl md:text-2xl mb-8 text-primary-100">
-                  {t(locale, 'home_hero_guest_sub')}
+                  {t(locale as Locale, 'home_hero_guest_sub')}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link 
                     href="/registro" 
                     className="bg-accent-500 hover:bg-accent-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all hover-lift ripple shadow-lg"
                   >
-                    {t(locale, 'home_hero_guest_cta_register')}
+                    {t(locale as Locale, 'home_hero_guest_cta_register')}
                   </Link>
                   <Link 
                     href="/experiencias" 
                     className="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-full font-semibold text-lg transition-all hover-lift border-2 border-white/30"
                   >
-                    {t(locale, 'home_hero_guest_cta_experiences')}
+                    {t(locale as Locale, 'home_hero_guest_cta_experiences')}
                   </Link>
                 </div>
                 <p className="mt-6 text-primary-200 text-sm">
-                  {t(locale, 'home_hero_guest_badge')}
+                  {t(locale as Locale, 'home_hero_guest_badge')}
                 </p>
               </div>
             )}

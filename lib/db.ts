@@ -57,7 +57,7 @@ export function getExperienciaById(id: number) {
 }
 
 export function saveExperiencia(experiencia: any) {
-  const experiencias = getExperiencias()
+  const experiencias = getExperiencias() as any[]
   const index = experiencias.findIndex((e: any) => e.id === experiencia.id)
   if (index >= 0) {
     experiencias[index] = experiencia
@@ -79,7 +79,7 @@ export function getGrupoById(id: number) {
 }
 
 export function saveGrupo(grupo: any) {
-  const grupos = getGrupos()
+  const grupos = getGrupos() as any[]
   const index = grupos.findIndex((g: any) => g.id === grupo.id)
   if (index >= 0) {
     grupos[index] = grupo
@@ -101,7 +101,7 @@ export function getMensajes(grupoId: number) {
 }
 
 export function addMensaje(mensaje: any) {
-  const mensajes = readFile(FILES.mensajes, [])
+  const mensajes = readFile(FILES.mensajes, []) as any[]
   mensajes.push(mensaje)
   writeFile(FILES.mensajes, mensajes)
   return mensaje
@@ -118,7 +118,7 @@ export function getUsuarioById(id: string) {
 }
 
 export function saveUsuario(usuario: any) {
-  const usuarios = getUsuarios()
+  const usuarios = getUsuarios() as any[]
   const index = usuarios.findIndex((u: any) => u.id === usuario.id)
   if (index >= 0) {
     usuarios[index] = usuario
@@ -140,7 +140,7 @@ export function getPostById(id: number) {
 }
 
 export function addPost(post: any) {
-  const posts = getPosts()
+  const posts = getPosts() as any[]
   // Asegurar que tiene los campos nuevos
   const newPost = {
     ...post,
@@ -153,7 +153,7 @@ export function addPost(post: any) {
 }
 
 export function updatePost(post: any) {
-  const posts = getPosts()
+  const posts = getPosts() as any[]
   const index = posts.findIndex((p: any) => p.id === post.id)
   if (index >= 0) {
     posts[index] = { ...posts[index], ...post }
@@ -181,7 +181,7 @@ export function getSubscriptionByUserId(userId: string) {
 }
 
 export function saveSubscription(subscription: any) {
-  const subscriptions = getSubscriptions()
+  const subscriptions = getSubscriptions() as any[]
   const index = subscriptions.findIndex((s: any) => s.userId === subscription.userId)
   if (index >= 0) {
     subscriptions[index] = subscription
@@ -203,7 +203,7 @@ export function getReservaById(id: number) {
 }
 
 export function saveReserva(reserva: any) {
-  const reservas = getReservas()
+  const reservas = getReservas() as any[]
   const index = reservas.findIndex((r: any) => r.id === reserva.id)
   if (index >= 0) {
     reservas[index] = reserva
@@ -225,7 +225,7 @@ export function getPremiumExperienceById(id: number) {
 }
 
 export function savePremiumExperience(experience: any) {
-  const experiences = getPremiumExperiences()
+  const experiences = getPremiumExperiences() as any[]
   const index = experiences.findIndex((e: any) => e.id === experience.id)
   
   if (index >= 0) {

@@ -3,12 +3,14 @@
 const API_BASE = '/api'
 
 async function fetchAPI(endpoint: string, options?: RequestInit) {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    ...(options?.headers as Record<string, string> || {}),
+  }
+  
   const response = await fetch(`${API_BASE}${endpoint}`, {
     ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options?.headers,
-    },
+    headers,
   })
   
   if (!response.ok) {
@@ -164,13 +166,16 @@ function getAuthHeaders() {
 }
 
 async function fetchAdminAPI(endpoint: string, options?: RequestInit) {
+  const authHeaders = getAuthHeaders() as Record<string, string>
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    ...authHeaders,
+    ...(options?.headers as Record<string, string> || {}),
+  }
+  
   const response = await fetch(`${API_BASE}${endpoint}`, {
     ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...getAuthHeaders(),
-      ...options?.headers,
-    },
+    headers,
   })
   
   if (!response.ok) {

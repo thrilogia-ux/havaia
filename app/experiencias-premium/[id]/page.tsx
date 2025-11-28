@@ -269,7 +269,7 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
                 <div className="mt-6">
                   <h3 className="font-semibold text-gray-900 mb-3">Incluye</h3>
                   <ul className="space-y-2">
-                    {experience.includes.map((item, idx) => (
+                    {experience.includes.map((item: any, idx: number) => (
                       <li key={idx} className="flex items-start gap-2">
                         <CheckIcon className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                         <span className="text-gray-600">{item}</span>
@@ -282,7 +282,7 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
                 <div className="mt-6">
                   <h3 className="font-semibold text-gray-900 mb-3">Destacados</h3>
                   <ul className="space-y-2">
-                    {experience.highlights.map((item, idx) => (
+                    {experience.highlights.map((item: any, idx: number) => (
                       <li key={idx} className="flex items-start gap-2">
                         <StarIcon className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                         <span className="text-gray-600">{item}</span>

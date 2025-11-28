@@ -153,7 +153,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
         {/* Galería de miniaturas */}
         {experiencia.gallery && experiencia.gallery.length > 1 && (
           <div className="mb-8 flex gap-3 overflow-x-auto pb-2">
-            {experiencia.gallery.map((url, idx) => (
+            {experiencia.gallery.map((url: any, idx: number) => (
               <button
                 key={idx}
                 onClick={() => setMainImage(url)}
@@ -220,7 +220,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="text-2xl font-bold mb-4 text-gray-900">Itinerario</h2>
               <div className="space-y-3">
-                {experiencia.itinerary.map((item, idx) => (
+                {experiencia.itinerary.map((item: any, idx: number) => (
                   <div key={idx} className="flex items-start gap-3">
                     <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center text-primary-600 font-semibold flex-shrink-0">
                       {idx + 1}
@@ -236,7 +236,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <h2 className="text-2xl font-bold mb-4 text-gray-900">Incluye</h2>
                 <ul className="space-y-2">
-                  {experiencia.includes.map((item, idx) => (
+                  {experiencia.includes.map((item: any, idx: number) => (
                     <li key={idx} className="flex items-center gap-2">
                       <CheckIcon className="w-5 h-5 text-green-500" />
                       <span className="text-gray-700">{item}</span>
@@ -247,7 +247,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <h2 className="text-2xl font-bold mb-4 text-gray-900">No incluye</h2>
                 <ul className="space-y-2">
-                  {experiencia.notIncludes.map((item, idx) => (
+                  {experiencia.notIncludes.map((item: any, idx: number) => (
                     <li key={idx} className="flex items-center gap-2">
                       <XMarkIcon className="w-5 h-5 text-red-500" />
                       <span className="text-gray-700">{item}</span>
@@ -261,7 +261,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="text-2xl font-bold mb-4 text-gray-900">Reseñas ({experiencia.reviews})</h2>
               <div className="space-y-4">
-                {reviews.map((review, idx) => (
+                {reviews.map((review: any, idx: number) => (
                   <div key={idx} className="border-b border-gray-200 pb-4 last:border-0 last:pb-0">
                     <div className="flex items-center justify-between mb-2">
                       <div>
@@ -287,7 +287,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
             <div className="bg-white rounded-xl shadow-sm p-6 sticky top-24 space-y-4">
               <h2 className="text-xl font-bold text-gray-900">Fechas disponibles</h2>
               <div className="space-y-3">
-                {slots.map((slot, idx) => (
+                {slots.map((slot: any, idx: number) => (
                   <button
                     key={idx}
                     disabled={!slot.available}
@@ -448,7 +448,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
               <div className="mb-4">
                 <p className="text-sm text-gray-600 mb-2">Idiomas:</p>
                 <div className="flex flex-wrap gap-2">
-                  {experiencia.host.languages.map((lang, idx) => (
+                  {experiencia.host.languages.map((lang: any, idx: number) => (
                     <span key={idx} className="bg-primary-100 text-primary-700 text-xs px-2 py-1 rounded-full">
                       {lang}
                     </span>

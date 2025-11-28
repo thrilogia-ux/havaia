@@ -38,6 +38,11 @@ export default function UserMenu() {
     router.refresh()
   }
 
+  const handleNavigation = (path: string) => {
+    setShowMenu(false)
+    window.location.href = path
+  }
+
   if (!user) return null
 
   const menuItems = [
@@ -136,18 +141,17 @@ export default function UserMenu() {
               {menuItems.map((item) => {
                 const Icon = item.icon
                 return (
-                  <Link
+                  <button
                     key={item.href}
-                    href={item.href}
-                    onClick={() => setShowMenu(false)}
-                    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors group"
+                    onClick={() => handleNavigation(item.href)}
+                    className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors group cursor-pointer"
                   >
                     <Icon className={`w-5 h-5 ${item.color}`} />
-                    <span className="flex-1 text-gray-700 group-hover:text-gray-900 font-medium">
+                    <span className="flex-1 text-left text-gray-700 group-hover:text-gray-900 font-medium">
                       {item.label}
                     </span>
                     <ArrowRightOnRectangleIcon className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </Link>
+                  </button>
                 )
               })}
             </div>
@@ -158,23 +162,21 @@ export default function UserMenu() {
             {/* Settings & Logout */}
             <div className="py-2">
               {!isPremium() && (
-                <Link
-                  href="/planes"
-                  onClick={() => setShowMenu(false)}
-                  className="flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg mx-2 mb-2 transition-all hover-lift"
+                <button
+                  onClick={() => handleNavigation('/planes')}
+                  className="w-full flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-lg mx-2 mb-2 transition-all hover-lift cursor-pointer"
                 >
                   <SparklesIcon className="w-5 h-5" />
                   <span className="font-semibold">Actualizar a Premium</span>
-                </Link>
+                </button>
               )}
-              <Link
-                href="/perfil"
-                onClick={() => setShowMenu(false)}
-                className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
+              <button
+                onClick={() => handleNavigation('/perfil')}
+                className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors cursor-pointer"
               >
                 <Cog6ToothIcon className="w-5 h-5 text-gray-600" />
                 <span className="text-gray-700 font-medium">Mi Perfil</span>
-              </Link>
+              </button>
               <button
                 onClick={() => {
                   handleLogout()

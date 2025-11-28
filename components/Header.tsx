@@ -30,44 +30,71 @@ export default function Header() {
     setLocale(newLocale)
   }
 
+  const handleNavigation = (path: string) => {
+    setShowMenu(false)
+    // Usar window.location para forzar la navegación completa
+    window.location.href = path
+  }
+
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className="bg-white shadow-sm sticky top-0 z-[100]">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 gap-4">
           <div className="flex items-center gap-6 h-full">
-            <Link href="/" className="flex items-center gap-2 h-full">
+            <button
+              onClick={() => handleNavigation('/')}
+              className="flex items-center gap-2 h-full hover:opacity-80 transition-opacity cursor-pointer"
+            >
               <img
                 src="/logo-havaia.png"
                 alt="Havaia"
                 className="h-10 w-auto"
               />
-            </Link>
+            </button>
             {/* Menú desktop */}
             <nav className="hidden md:flex items-center gap-6 text-base h-full">
-              <Link href="/experiencias" className="text-gray-700 hover:text-primary-600 font-semibold transition-all hover:scale-105 relative group">
+              <button
+                onClick={() => handleNavigation('/experiencias')}
+                className="text-gray-700 hover:text-primary-600 font-semibold transition-all hover:scale-105 relative group py-2 cursor-pointer"
+              >
                 {t(locale, 'nav_experiences')}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 transition-all group-hover:w-full"></span>
-              </Link>
-              <Link href="/comunidad" className="text-gray-700 hover:text-primary-600 font-semibold transition-all hover:scale-105 relative group">
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 transition-all group-hover:w-full pointer-events-none"></span>
+              </button>
+              <button
+                onClick={() => handleNavigation('/comunidad')}
+                className="text-gray-700 hover:text-primary-600 font-semibold transition-all hover:scale-105 relative group py-2 cursor-pointer"
+              >
                 {t(locale, 'nav_community')}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 transition-all group-hover:w-full"></span>
-              </Link>
-              <Link href="/grupos" className="text-gray-700 hover:text-primary-600 font-semibold transition-all hover:scale-105 relative group">
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 transition-all group-hover:w-full pointer-events-none"></span>
+              </button>
+              <button
+                onClick={() => handleNavigation('/grupos')}
+                className="text-gray-700 hover:text-primary-600 font-semibold transition-all hover:scale-105 relative group py-2 cursor-pointer"
+              >
                 {t(locale, 'nav_groups')}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 transition-all group-hover:w-full"></span>
-              </Link>
-              <Link href="/challenges" className="text-gray-700 hover:text-primary-600 font-semibold transition-all hover:scale-105 relative group">
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 transition-all group-hover:w-full pointer-events-none"></span>
+              </button>
+              <button
+                onClick={() => handleNavigation('/challenges')}
+                className="text-gray-700 hover:text-primary-600 font-semibold transition-all hover:scale-105 relative group py-2 cursor-pointer"
+              >
                 {t(locale, 'nav_challenges')}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 transition-all group-hover:w-full"></span>
-              </Link>
-              <Link href="/leaderboard" className="text-gray-700 hover:text-primary-600 font-semibold transition-all hover:scale-105 relative group">
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 transition-all group-hover:w-full pointer-events-none"></span>
+              </button>
+              <button
+                onClick={() => handleNavigation('/leaderboard')}
+                className="text-gray-700 hover:text-primary-600 font-semibold transition-all hover:scale-105 relative group py-2 cursor-pointer"
+              >
                 {t(locale, 'nav_leaderboard')}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 transition-all group-hover:w-full"></span>
-              </Link>
-              <Link href="/planes" className="text-gray-700 hover:text-primary-600 font-semibold transition-all hover:scale-105 relative group">
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 transition-all group-hover:w-full pointer-events-none"></span>
+              </button>
+              <button
+                onClick={() => handleNavigation('/planes')}
+                className="text-gray-700 hover:text-primary-600 font-semibold transition-all hover:scale-105 relative group py-2 cursor-pointer"
+              >
                 {t(locale, 'nav_plans')}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 transition-all group-hover:w-full"></span>
-              </Link>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 transition-all group-hover:w-full pointer-events-none"></span>
+              </button>
             </nav>
           </div>
           <div className="flex items-center gap-3 h-full">
@@ -93,19 +120,31 @@ export default function Header() {
               </button>
             </div>
             {/* Iconos - solo desktop */}
-            <Link href="/experiencias" className="hidden md:inline-flex p-2 text-gray-600 hover:text-primary-600 transition-colors">
+            <button
+              onClick={() => handleNavigation('/experiencias')}
+              className="hidden md:inline-flex p-2 text-gray-600 hover:text-primary-600 transition-colors cursor-pointer"
+            >
               <MagnifyingGlassIcon className="w-6 h-6" />
-            </Link>
-            <Link href="/favoritos" className="hidden md:inline-flex p-2 text-gray-600 hover:text-primary-600 relative transition-colors">
+            </button>
+            <button
+              onClick={() => handleNavigation('/favoritos')}
+              className="hidden md:inline-flex p-2 text-gray-600 hover:text-primary-600 relative transition-colors cursor-pointer"
+            >
               <HeartIcon className="w-6 h-6" />
-            </Link>
-            <Link href="/mensajes" className="hidden md:inline-flex p-2 text-gray-600 hover:text-primary-600 relative transition-colors">
+            </button>
+            <button
+              onClick={() => handleNavigation('/mensajes')}
+              className="hidden md:inline-flex p-2 text-gray-600 hover:text-primary-600 relative transition-colors cursor-pointer"
+            >
               <ChatBubbleLeftRightIcon className="w-6 h-6" />
-            </Link>
-            <Link href="/notificaciones" className="hidden md:inline-flex p-2 text-gray-600 hover:text-primary-600 relative transition-colors">
+            </button>
+            <button
+              onClick={() => handleNavigation('/notificaciones')}
+              className="hidden md:inline-flex p-2 text-gray-600 hover:text-primary-600 relative transition-colors cursor-pointer"
+            >
               <BellIcon className="w-6 h-6" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-accent-500 rounded-full animate-pulse"></span>
-            </Link>
+              <span className="absolute top-1 right-1 w-2 h-2 bg-accent-500 rounded-full animate-pulse pointer-events-none"></span>
+            </button>
             
             {/* Perfil/Login - siempre visible */}
             {user ? (
@@ -148,85 +187,75 @@ export default function Header() {
           <div className="md:hidden border-t border-gray-200 bg-white">
             <nav className="px-4 py-4 space-y-3">
               {/* Enlaces principales */}
-              <Link 
-                href="/experiencias" 
-                onClick={() => setShowMenu(false)}
-                className="block text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors"
+              <button
+                onClick={() => handleNavigation('/experiencias')}
+                className="block w-full text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors cursor-pointer"
               >
                 {t(locale, 'nav_experiences')}
-              </Link>
-              <Link 
-                href="/comunidad" 
-                onClick={() => setShowMenu(false)}
-                className="block text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors"
+              </button>
+              <button
+                onClick={() => handleNavigation('/comunidad')}
+                className="block w-full text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors cursor-pointer"
               >
                 {t(locale, 'nav_community')}
-              </Link>
-              <Link 
-                href="/grupos" 
-                onClick={() => setShowMenu(false)}
-                className="block text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors"
+              </button>
+              <button
+                onClick={() => handleNavigation('/grupos')}
+                className="block w-full text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors cursor-pointer"
               >
                 {t(locale, 'nav_groups')}
-              </Link>
-              <Link 
-                href="/challenges" 
-                onClick={() => setShowMenu(false)}
-                className="block text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors"
+              </button>
+              <button
+                onClick={() => handleNavigation('/challenges')}
+                className="block w-full text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors cursor-pointer"
               >
                 {t(locale, 'nav_challenges')}
-              </Link>
-              <Link 
-                href="/leaderboard" 
-                onClick={() => setShowMenu(false)}
-                className="block text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors"
+              </button>
+              <button
+                onClick={() => handleNavigation('/leaderboard')}
+                className="block w-full text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors cursor-pointer"
               >
                 {t(locale, 'nav_leaderboard')}
-              </Link>
-              <Link 
-                href="/planes" 
-                onClick={() => setShowMenu(false)}
-                className="block text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors"
+              </button>
+              <button
+                onClick={() => handleNavigation('/planes')}
+                className="block w-full text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors cursor-pointer"
               >
                 {t(locale, 'nav_plans')}
-              </Link>
+              </button>
 
               {/* Separador */}
               <div className="border-t border-gray-200 my-3"></div>
 
               {/* Iconos con texto */}
-              <Link 
-                href="/experiencias" 
-                onClick={() => setShowMenu(false)}
-                className="flex items-center gap-3 text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors"
+              <button
+                onClick={() => handleNavigation('/experiencias')}
+                className="flex items-center gap-3 w-full text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors cursor-pointer"
               >
                 <MagnifyingGlassIcon className="w-5 h-5" />
                 <span>{t(locale, 'nav_search')}</span>
-              </Link>
-              <Link 
-                href="/favoritos" 
-                onClick={() => setShowMenu(false)}
-                className="flex items-center gap-3 text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors"
+              </button>
+              <button
+                onClick={() => handleNavigation('/favoritos')}
+                className="flex items-center gap-3 w-full text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors cursor-pointer"
               >
                 <HeartIcon className="w-5 h-5" />
                 <span>{t(locale, 'nav_favorites')}</span>
-              </Link>
-              <Link 
-                href="/mensajes" 
-                onClick={() => setShowMenu(false)}
-                className="flex items-center gap-3 text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors"
+              </button>
+              <button
+                onClick={() => handleNavigation('/mensajes')}
+                className="flex items-center gap-3 w-full text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors cursor-pointer"
               >
                 <ChatBubbleLeftRightIcon className="w-5 h-5" />
                 <span>{t(locale, 'nav_messages')}</span>
-              </Link>
-              <Link 
-                href="/notificaciones" 
-                onClick={() => setShowMenu(false)}
-                className="flex items-center gap-3 text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors"
+              </button>
+              <button
+                onClick={() => handleNavigation('/notificaciones')}
+                className="flex items-center gap-3 w-full text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors cursor-pointer"
               >
                 <BellIcon className="w-5 h-5" />
                 <span>{t(locale, 'nav_notifications')}</span>
-              </Link>
+              </button>
 
               {/* Separador */}
               <div className="border-t border-gray-200 my-3"></div>
@@ -269,13 +298,13 @@ export default function Header() {
               {!user && (
                 <>
                   <div className="border-t border-gray-200 my-3"></div>
-                  <Link
-                    href="/login"
-                    onClick={() => setShowMenu(false)}
-                    className="block w-full text-center px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-full font-semibold text-sm transition-all"
-                  >
-                    {t(locale, 'nav_login')}
-                  </Link>
+              <Link
+                href="/login"
+                onClick={() => setShowMenu(false)}
+                className="block w-full text-center px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-full font-semibold text-sm transition-all cursor-pointer"
+              >
+                {t(locale, 'nav_login')}
+              </Link>
                 </>
               )}
             </nav>

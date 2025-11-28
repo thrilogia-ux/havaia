@@ -14,7 +14,7 @@ interface OnboardingStep {
 const ONBOARDING_STEPS: OnboardingStep[] = [
   {
     id: 'welcome',
-    title: '¡Bienvenido a Gentum.ar! 🎉',
+    title: '¡Bienvenido a Havaia! 🎉',
     description: 'Te vamos a mostrar las mejores funcionalidades de la app',
     position: 'bottom',
   },
@@ -53,7 +53,7 @@ export default function Onboarding() {
   useEffect(() => {
     if (typeof window === 'undefined') return
     
-    const hasCompleted = localStorage.getItem('gentum_onboarding_completed')
+    const hasCompleted = localStorage.getItem('havaia_onboarding_completed')
     if (!hasCompleted) {
       setCurrentStep(0)
     } else {
@@ -76,7 +76,7 @@ export default function Onboarding() {
   }
 
   const handleComplete = () => {
-    localStorage.setItem('gentum_onboarding_completed', 'true')
+    localStorage.setItem('havaia_onboarding_completed', 'true')
     setCurrentStep(null)
     setCompleted(true)
   }
@@ -91,48 +91,60 @@ export default function Onboarding() {
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
       
       {/* Tooltip */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl p-6 max-w-md pointer-events-auto">
-        <div className="flex items-start justify-between mb-4">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl p-6 sm:p-8 max-w-md w-[90%] sm:w-full pointer-events-auto mx-4">
+        <div className="flex items-start justify-between mb-4 sm:mb-6">
           <div className="flex items-center gap-2">
-            <span className="bg-primary-100 text-primary-700 text-xs px-2 py-1 rounded-full font-semibold">
+            <span className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white text-xs px-3 py-1.5 rounded-full font-semibold">
               {currentStep + 1} / {ONBOARDING_STEPS.length}
             </span>
           </div>
           <button
             onClick={handleSkip}
-            className="text-gray-400 hover:text-gray-600"
+            className="text-gray-400 hover:text-gray-600 transition-colors p-1"
+            aria-label="Cerrar"
           >
-            <XMarkIcon className="w-5 h-5" />
+            <XMarkIcon className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
         </div>
         
-        <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
-        <p className="text-gray-600 mb-6">{step.description}</p>
+        {/* Logo en el paso de bienvenida */}
+        {currentStep === 0 && (
+          <div className="flex justify-center mb-4 sm:mb-6">
+            <img
+              src="/logo-havaia.png"
+              alt="Havaia"
+              className="h-16 sm:h-20 w-auto"
+            />
+          </div>
+        )}
         
-        <div className="flex items-center justify-between">
+        <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">{step.title}</h3>
+        <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8 leading-relaxed">{step.description}</p>
+        
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-0">
           <button
             onClick={handleSkip}
-            className="text-gray-600 hover:text-gray-900 font-medium"
+            className="text-gray-600 hover:text-gray-900 font-medium text-sm sm:text-base px-4 py-2 sm:py-2.5 transition-colors"
           >
             Saltar
           </button>
           <button
             onClick={handleNext}
-            className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors"
+            className="bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-semibold text-sm sm:text-base transition-all hover:scale-105 shadow-lg"
           >
             {currentStep === ONBOARDING_STEPS.length - 1 ? 'Comenzar' : 'Siguiente'}
           </button>
         </div>
         
         {/* Progress dots */}
-        <div className="flex items-center justify-center gap-2 mt-4">
+        <div className="flex items-center justify-center gap-2 mt-6 sm:mt-8">
           {ONBOARDING_STEPS.map((_, index) => (
             <div
               key={index}
-              className={`h-2 rounded-full transition-all ${
+              className={`h-2 sm:h-2.5 rounded-full transition-all ${
                 index <= currentStep
-                  ? 'bg-primary-500 w-6'
-                  : 'bg-gray-300 w-2'
+                  ? 'bg-gradient-to-r from-primary-500 to-secondary-500 w-6 sm:w-8'
+                  : 'bg-gray-300 w-2 sm:w-2.5'
               }`}
             />
           ))}

@@ -4,6 +4,8 @@ import { requireAdminOrHost, unauthorizedResponse } from '@/lib/auth-middleware'
 import fs from 'fs'
 import path from 'path'
 
+export const dynamic = 'force-dynamic'
+
 // Obtener estadísticas del sistema
 export async function GET(request: NextRequest) {
   try {

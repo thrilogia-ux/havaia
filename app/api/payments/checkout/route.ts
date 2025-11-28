@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { saveReserva } from '@/lib/db'
 
+export const dynamic = 'force-dynamic'
+
 /**
  * ENDPOINT DE CHECKOUT DE PAGOS
  * 

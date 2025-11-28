@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireAdmin, unauthorizedResponse } from '@/lib/auth-middleware'
 import { createAdminUser, createHostUser } from '@/lib/create-admin'
 
+export const dynamic = 'force-dynamic'
+
 // Crear usuario admin o host (solo para admins)
 export async function POST(request: NextRequest) {
   try {

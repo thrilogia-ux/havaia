@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getUsuarios, getUsuarioById, saveUsuario } from '@/lib/db'
 import { requireAdmin, unauthorizedResponse } from '@/lib/auth-middleware'
 
+export const dynamic = 'force-dynamic'
+
 // Obtener todos los usuarios (solo admin)
 export async function GET(request: NextRequest) {
   try {

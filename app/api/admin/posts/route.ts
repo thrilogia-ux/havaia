@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPosts, getPostById, updatePost, deletePost } from '@/lib/db'
 import { requireAdmin, unauthorizedResponse } from '@/lib/auth-middleware'
 
+export const dynamic = 'force-dynamic'
+
 // Obtener todos los posts (solo admin)
 export async function GET(request: NextRequest) {
   try {

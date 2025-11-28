@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getExperiencias, getExperienciaById, saveExperiencia } from '@/lib/db'
 import { requireAdminOrHost, unauthorizedResponse } from '@/lib/auth-middleware'
 
+export const dynamic = 'force-dynamic'
+
 // Obtener todas las experiencias (admin/host)
 export async function GET(request: NextRequest) {
   try {

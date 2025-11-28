@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getExperiencias, getExperienciaById, saveExperiencia } from '@/lib/db'
 import { experienciasData } from '@/lib/data'
 
+export const dynamic = 'force-dynamic'
+
 // Inicializar datos si no existen
 export async function GET(request: NextRequest) {
   try {

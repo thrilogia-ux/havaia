@@ -3,6 +3,8 @@ import fs from 'fs'
 import path from 'path'
 import { premiumExperiences } from '@/lib/premium-experiences'
 
+export const dynamic = 'force-dynamic'
+
 const DATA_DIR = path.join(process.cwd(), 'data')
 const PREMIUM_EXP_FILE = path.join(DATA_DIR, 'premium-experiences.json')
 

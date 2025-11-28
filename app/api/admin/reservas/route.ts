@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getReservas, getReservaById, saveReserva } from '@/lib/db'
 import { requireAdmin, unauthorizedResponse } from '@/lib/auth-middleware'
 
+export const dynamic = 'force-dynamic'
+
 // Obtener todas las reservas (solo admin)
 export async function GET(request: NextRequest) {
   try {

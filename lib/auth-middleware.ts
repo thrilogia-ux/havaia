@@ -21,7 +21,7 @@ export function getAuthUser(request: NextRequest): AuthUser | null {
   // En producción esto sería un JWT real
   // Por ahora, el token es el userId
   const usuarios = getUsuarios()
-  const usuario = usuarios.find((u: any) => u.id === token)
+  const usuario = usuarios.find((u: any) => u.id === token) as any
   
   if (!usuario) {
     return null

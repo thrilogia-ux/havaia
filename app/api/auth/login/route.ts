@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     
     return NextResponse.json({ 
       user: usuario,
-      token: usuario.id // El token es el userId para simplificar
+      token: (usuario as any).id // El token es el userId para simplificar
     })
   } catch (error) {
     console.error('Error en POST /api/auth/login:', error)

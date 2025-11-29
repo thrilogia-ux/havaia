@@ -40,7 +40,12 @@ export default function UserMenu() {
 
   const handleNavigation = (path: string) => {
     setShowMenu(false)
-    window.location.href = path
+    // Verificar que estamos en el cliente antes de usar window
+    if (typeof window !== 'undefined') {
+      window.location.href = path
+    } else {
+      router.push(path)
+    }
   }
 
   if (!user) return null

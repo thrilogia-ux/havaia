@@ -32,8 +32,12 @@ export default function Header() {
 
   const handleNavigation = (path: string) => {
     setShowMenu(false)
-    // Usar window.location para forzar la navegación completa
-    window.location.href = path
+    // Verificar que estamos en el cliente antes de usar window
+    if (typeof window !== 'undefined') {
+      window.location.href = path
+    } else {
+      router.push(path)
+    }
   }
 
   return (

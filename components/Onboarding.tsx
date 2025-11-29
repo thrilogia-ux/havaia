@@ -14,7 +14,7 @@ interface OnboardingStep {
 const ONBOARDING_STEPS: OnboardingStep[] = [
   {
     id: 'welcome',
-    title: '¡Bienvenido a Havaia! 🎉',
+    title: '¡Bienvenido! 🎉',
     description: 'Te vamos a mostrar las mejores funcionalidades de la app',
     position: 'bottom',
   },
@@ -91,7 +91,7 @@ export default function Onboarding() {
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
       
       {/* Tooltip */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl p-6 sm:p-8 max-w-md w-[90%] sm:w-full pointer-events-auto mx-4">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl p-6 sm:p-8 max-w-md w-[90vw] sm:w-full pointer-events-auto">
         <div className="flex items-start justify-between mb-4 sm:mb-6">
           <div className="flex items-center gap-2">
             <span className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white text-xs px-3 py-1.5 rounded-full font-semibold">
@@ -109,7 +109,8 @@ export default function Onboarding() {
         
         {/* Logo en el paso de bienvenida */}
         {currentStep === 0 && (
-          <div className="flex justify-center mb-4 sm:mb-6">
+          <div className="flex flex-col items-center mb-4 sm:mb-6">
+            <p className="text-lg sm:text-xl font-semibold text-gray-700 mb-3 sm:mb-4">Bienvenido a:</p>
             <img
               src="/logo-havaia.png"
               alt="Havaia"
@@ -118,7 +119,7 @@ export default function Onboarding() {
           </div>
         )}
         
-        <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">{step.title}</h3>
+        <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight text-center">{step.title}</h3>
         <p className="text-sm sm:text-base text-gray-600 mb-6 sm:mb-8 leading-relaxed">{step.description}</p>
         
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-0">

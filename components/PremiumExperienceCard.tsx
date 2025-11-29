@@ -90,7 +90,7 @@ export default function PremiumExperienceCard({ experience, featured = false }: 
   }
 
   return (
-    <div className={`bg-white rounded-2xl overflow-hidden shadow-lg border-2 ${featured ? 'border-primary-500' : 'border-gray-200'} transition-all hover:shadow-xl`}>
+    <div className="bg-white rounded-2xl overflow-hidden shadow-lg transition-all hover:shadow-xl">
       {/* Imagen */}
       <div className="relative h-64 overflow-hidden">
         <img

@@ -51,18 +51,26 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
 
   useEffect(() => {
     loadExperiencia()
-  }, [experienciaId])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [experienciaId, locale])
 
   const loadExperiencia = async () => {
     try {
       setLoading(true)
       const exp = await experienciasAPI.getById(experienciaId)
       if (exp) {
-        setExperiencia(exp)
-        setMainImage(exp.image || '')
+        // Aplicar traducciones
+        const { getExperienciasTranslated } = require('@/lib/data')
+        const translated = getExperienciasTranslated(locale as Locale)
+        const translatedExp = translated.find((t: any) => t.id === exp.id)
+        const finalExp = translatedExp ? { ...exp, ...translatedExp } : exp
+        setExperiencia(finalExp)
+        setMainImage(finalExp.image || '')
       } else {
-        // Fallback a datos locales si no se encuentra en la API
-        const localExp = experienciasData.find(e => e.id === experienciaId)
+        // Fallback a datos locales traducidos si no se encuentra en la API
+        const { getExperienciasTranslated } = require('@/lib/data')
+        const translated = getExperienciasTranslated(locale as Locale)
+        const localExp = translated.find((e: any) => e.id === experienciaId)
         if (localExp) {
           setExperiencia(localExp)
           setMainImage(localExp.image || '')
@@ -70,8 +78,10 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
       }
     } catch (error) {
       console.error('Error cargando experiencia:', error)
-      // Fallback a datos locales
-      const localExp = experienciasData.find(e => e.id === experienciaId)
+      // Fallback a datos locales traducidos
+      const { getExperienciasTranslated } = require('@/lib/data')
+      const translated = getExperienciasTranslated(locale as Locale)
+      const localExp = translated.find((e: any) => e.id === experienciaId)
       if (localExp) {
         setExperiencia(localExp)
         setMainImage(localExp.image || '')

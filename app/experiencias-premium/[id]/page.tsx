@@ -8,6 +8,8 @@ import { getPremiumExperienceById, reservePremiumExperience, cancelPremiumReserv
 import PremiumExperienceCalendar from '@/components/PremiumExperienceCalendar'
 import { getCurrentUser } from '@/lib/auth'
 import { showToast } from '@/components/ToastContainer'
+import { useI18n } from '@/components/Providers'
+import { type Locale } from '@/lib/i18n'
 import { 
   StarIcon, 
   MapPinIcon, 
@@ -20,6 +22,7 @@ import Link from 'next/link'
 
 export default function PremiumExperienceDetailPage({ params }: { params: { id: string } }) {
   const router = useRouter()
+  const { locale } = useI18n()
   const experienceId = parseInt(params.id)
   const user = getCurrentUser()
   
@@ -32,7 +35,8 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
 
   useEffect(() => {
     loadExperience()
-  }, [experienceId])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [experienceId, locale])
 
   const loadExperience = () => {
     try {
@@ -42,8 +46,8 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
       const urlParams = new URLSearchParams(window.location.search)
       const dateFromUrl = urlParams.get('date')
       
-      // Usar la función local directamente, con fecha si está en la URL
-      const exp = getPremiumExperienceById(experienceId, dateFromUrl || undefined)
+      // Usar la función local directamente, con fecha si está en la URL y traducciones
+      const exp = getPremiumExperienceById(experienceId, dateFromUrl || undefined, locale as Locale)
       
       if (!exp) {
         showToast('Experiencia no encontrada', 'error')
@@ -143,7 +147,7 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
         showToast(`¡Reserva confirmada! ${seats} lugar${seats > 1 ? 'es' : ''} reservado${seats > 1 ? 's' : ''}`, 'success')
         
         // Recargar la experiencia para ver los cambios actualizados
-        const updatedExp = getPremiumExperienceById(experience.id, selectedDate)
+        const updatedExp = getPremiumExperienceById(experience.id, selectedDate, locale as Locale)
         if (updatedExp) {
           setExperience(updatedExp)
           setHasReservation(true)
@@ -177,7 +181,7 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
         showToast('Reserva cancelada', 'success')
         
         // Recargar la experiencia
-        const updatedExp = getPremiumExperienceById(experience.id)
+        const updatedExp = getPremiumExperienceById(experience.id, undefined, locale as Locale)
         if (updatedExp) {
           setExperience(updatedExp)
           setHasReservation(false)
@@ -309,7 +313,7 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
                     onDateSelect={(date) => {
                       setSelectedDate(date)
                       // Recargar experiencia con la fecha seleccionada
-                      const expWithDate = getPremiumExperienceById(experience.id, date)
+                      const expWithDate = getPremiumExperienceById(experience.id, date, locale as Locale)
                       if (expWithDate) {
                         setExperience(expWithDate)
                         if (user) {

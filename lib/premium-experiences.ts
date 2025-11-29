@@ -1,5 +1,7 @@
 // Experiencias gastronómicas premium destacadas
 // Usa localStorage en el cliente, pero optimizado para evitar exceder el límite
+import { type Locale } from './i18n'
+import { premiumExperienceTranslations } from './experiences-translations'
 
 export interface PremiumExperienceReservation {
   userId: string
@@ -286,9 +288,9 @@ export function getNextAvailableDate(experience: PremiumExperience): PremiumExpe
   return null // Todas las fechas están llenas
 }
 
-export function getPremiumExperiences(): PremiumExperience[] {
+export function getPremiumExperiences(locale: Locale = 'es'): PremiumExperience[] {
   if (typeof window === 'undefined') {
-    return premiumExperiences.map(normalizeExperience)
+    return applyTranslations(premiumExperiences.map(normalizeExperience), locale)
   }
   
   try {
@@ -300,7 +302,7 @@ export function getPremiumExperiences(): PremiumExperience[] {
       try {
         const parsed = JSON.parse(stored)
         // Normalizar cada experiencia
-        return parsed.map((storedExp: any) => {
+        const normalized = parsed.map((storedExp: any) => {
           const base = premiumExperiences.find(e => e.id === storedExp.id)
           if (base) {
             return normalizeExperience({
@@ -310,6 +312,7 @@ export function getPremiumExperiences(): PremiumExperience[] {
           }
           return normalizeExperience(storedExp)
         })
+        return applyTranslations(normalized, locale)
       } catch (e) {
         console.error('Error parseando datos guardados:', e)
       }
@@ -319,7 +322,7 @@ export function getPremiumExperiences(): PremiumExperience[] {
     if (minimal) {
       try {
         const minimalData = JSON.parse(minimal)
-        return premiumExperiences.map(baseExp => {
+        const normalized = premiumExperiences.map(baseExp => {
           const minimalExp = minimalData.find((m: any) => m.id === baseExp.id)
           if (minimalExp) {
             return normalizeExperience({
@@ -329,6 +332,7 @@ export function getPremiumExperiences(): PremiumExperience[] {
           }
           return normalizeExperience(baseExp)
         })
+        return applyTranslations(normalized, locale)
       } catch (e) {
         console.error('Error parseando datos mínimos:', e)
       }
@@ -337,15 +341,31 @@ export function getPremiumExperiences(): PremiumExperience[] {
     // Inicializar con datos base normalizados
     const normalized = premiumExperiences.map(normalizeExperience)
     saveToStorage(normalized)
-    return normalized
+    return applyTranslations(normalized, locale)
   } catch (error) {
     console.error('Error leyendo experiencias premium:', error)
-    return premiumExperiences.map(normalizeExperience)
+    return applyTranslations(premiumExperiences.map(normalizeExperience), locale)
   }
 }
 
-export function getPremiumExperienceById(id: number, date?: string): PremiumExperience | undefined {
-  const experiences = getPremiumExperiences()
+// Función para aplicar traducciones a experiencias premium
+function applyTranslations(experiences: PremiumExperience[], locale: Locale): PremiumExperience[] {
+  return experiences.map(exp => {
+    const translations = premiumExperienceTranslations[exp.id as keyof typeof premiumExperienceTranslations]?.[locale]
+    if (!translations) return exp
+    
+    return {
+      ...exp,
+      title: translations.title,
+      description: translations.description,
+      includes: translations.includes,
+      highlights: translations.highlights,
+    }
+  })
+}
+
+export function getPremiumExperienceById(id: number, date?: string, locale: Locale = 'es'): PremiumExperience | undefined {
+  const experiences = getPremiumExperiences(locale)
   const experience = experiences.find(exp => exp.id === id)
   
   if (!experience) return undefined

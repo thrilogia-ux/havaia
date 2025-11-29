@@ -41,7 +41,8 @@ export default function ExperienciasPage() {
 
   useEffect(() => {
     loadExperiencias()
-  }, [filters])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters, locale])
 
   const loadExperiencias = async () => {
     setLoading(true)
@@ -54,11 +55,20 @@ export default function ExperienciasPage() {
         minPrice: filters.minPrice || undefined,
         maxPrice: filters.maxPrice || undefined,
       })
-      setExperiencias(data)
+      // Aplicar traducciones
+      const { getExperienciasTranslated } = require('@/lib/data')
+      const translated = getExperienciasTranslated(locale as Locale)
+      // Combinar datos de API con traducciones
+      const merged = data.map((exp: any) => {
+        const translatedExp = translated.find((t: any) => t.id === exp.id)
+        return translatedExp ? { ...exp, ...translatedExp } : exp
+      })
+      setExperiencias(merged)
     } catch (error) {
       console.error('Error cargando experiencias:', error)
-      // Fallback a datos locales si falla la API
-      setExperiencias(experienciasData)
+      // Fallback a datos locales traducidos si falla la API
+      const { getExperienciasTranslated } = require('@/lib/data')
+      setExperiencias(getExperienciasTranslated(locale as Locale))
     } finally {
       setLoading(false)
     }

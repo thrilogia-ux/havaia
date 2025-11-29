@@ -1,4 +1,6 @@
 // Datos mock para experiencias, grupos, etc.
+import { type Locale } from './i18n'
+import { experienceTranslations, categoryTranslations } from './experiences-translations'
 
 export interface Experiencia {
   id: number
@@ -334,6 +336,31 @@ export const experienciasData: Experiencia[] = [
     }
   },
 ]
+
+// Función para obtener experiencias traducidas
+export function getExperienciasTranslated(locale: Locale = 'es'): Experiencia[] {
+  return experienciasData.map(exp => {
+    const translations = experienceTranslations[exp.id as keyof typeof experienceTranslations]?.[locale]
+    const categoryTranslation = categoryTranslations[exp.category]?.[locale] || exp.category
+    
+    if (!translations) {
+      return {
+        ...exp,
+        category: categoryTranslation
+      }
+    }
+    
+    return {
+      ...exp,
+      title: translations.title,
+      description: translations.description,
+      itinerary: translations.itinerary,
+      includes: translations.includes,
+      notIncludes: translations.notIncludes,
+      category: categoryTranslation
+    }
+  })
+}
 
 // Función para obtener experiencias con filtros
 export function getExperiencias(filters?: {

@@ -28,7 +28,7 @@ import { getPremiumExperiences, getNextAvailableDate } from '@/lib/premium-exper
 import PremiumExperienceCard from '@/components/PremiumExperienceCard'
 
 // Componente de carrusel de experiencias
-function ExperiencesCarousel({ experiences, locale }: { experiences: typeof experienciasData, locale: string }) {
+function ExperiencesCarousel({ experiences, locale }: { experiences: typeof experienciasData, locale: Locale }) {
   const [currentPage, setCurrentPage] = useState(0)
   const itemsPerPage = 4
   const totalPages = Math.ceil(experiences.length / itemsPerPage)
@@ -131,23 +131,33 @@ export default function Home() {
     // Cargar experiencias desde la API
     loadExperiences()
     loadPremiumExperiences()
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [locale])
 
   const loadExperiences = async () => {
     try {
       const experiences = await experienciasAPI.getAll()
-      setHomeExperiences(experiences)
+      // Aplicar traducciones
+      const { getExperienciasTranslated } = require('@/lib/data')
+      const translated = getExperienciasTranslated(locale as Locale)
+      // Combinar datos de API con traducciones
+      const merged = experiences.map((exp: any) => {
+        const translatedExp = translated.find((t: any) => t.id === exp.id)
+        return translatedExp ? { ...exp, ...translatedExp } : exp
+      })
+      setHomeExperiences(merged)
     } catch (error) {
       console.error('Error cargando experiencias:', error)
-      // Fallback a datos locales si falla la API
-      setHomeExperiences(experienciasData)
+      // Fallback a datos locales traducidos si falla la API
+      const { getExperienciasTranslated } = require('@/lib/data')
+      setHomeExperiences(getExperienciasTranslated(locale as Locale))
     }
   }
 
   const loadPremiumExperiences = () => {
     try {
       // Usar la misma función que usa la página de detalle para mantener consistencia
-      const experiences = getPremiumExperiences()
+      const experiences = getPremiumExperiences(locale as Locale)
       // Mostrar solo las 3 primeras experiencias con fechas disponibles
       const availableExperiences = experiences
         .map(exp => {
@@ -188,7 +198,7 @@ export default function Home() {
               {t(locale as Locale, 'premium_experiences_title') || 'Experiencias Gastronómicas Exclusivas'}
             </h2>
             <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-              Las mejores experiencias culinarias curadas especialmente para vos, en tu idioma, con tu gente, y en los lugares más exclusivos de Buenos Aires.
+              {t(locale as Locale, 'premium_experiences_subtitle')}
             </p>
           </div>
           

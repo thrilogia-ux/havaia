@@ -9,7 +9,7 @@ import PremiumExperienceCalendar from '@/components/PremiumExperienceCalendar'
 import { getCurrentUser } from '@/lib/auth'
 import { showToast } from '@/components/ToastContainer'
 import { useI18n } from '@/components/Providers'
-import { type Locale } from '@/lib/i18n'
+import { t, type Locale } from '@/lib/i18n'
 import { 
   StarIcon, 
   MapPinIcon, 
@@ -115,20 +115,20 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
 
   const handleReserve = async () => {
     if (!user) {
-      showToast('Necesitás iniciar sesión para reservar', 'error')
+      showToast(t(locale as Locale, 'premium_login_required'), 'error')
       router.push('/login')
       return
     }
 
     if (seats > experience.maxSeats - experience.reservedSeats) {
-      showToast('No hay suficientes lugares disponibles', 'error')
+      showToast(t(locale as Locale, 'premium_no_seats_available'), 'error')
       return
     }
 
     setLoading(true)
 
     if (!selectedDate) {
-      showToast('Seleccioná una fecha para reservar', 'error')
+      showToast(t(locale as Locale, 'premium_select_date'), 'error')
       return
     }
 
@@ -144,7 +144,8 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
       )
 
       if (success) {
-        showToast(`¡Reserva confirmada! ${seats} lugar${seats > 1 ? 'es' : ''} reservado${seats > 1 ? 's' : ''}`, 'success')
+        const plural = seats > 1 ? 's' : ''
+        showToast(t(locale as Locale, 'premium_reservation_success', { seats, plural }), 'success')
         
         // Recargar la experiencia para ver los cambios actualizados
         const updatedExp = getPremiumExperienceById(experience.id, selectedDate, locale as Locale)
@@ -155,11 +156,11 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
         
         // Simular redirección a pago (en producción sería a MercadoPago/PayPal)
         setTimeout(() => {
-          showToast('Redirigiendo al pago...', 'info')
+          showToast(t(locale as Locale, 'premium_redirecting_payment'), 'info')
           // En producción: router.push('/api/payments/checkout?type=premium&id=' + experience.id + '&seats=' + seats)
         }, 1000)
       } else {
-        showToast('Error al realizar la reserva. No hay suficientes lugares disponibles.', 'error')
+        showToast(t(locale as Locale, 'premium_reservation_error'), 'error')
       }
     } catch (error: any) {
       const errorMessage = error?.message || 'Error al realizar la reserva'
@@ -178,7 +179,7 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
       const success = cancelPremiumReservation(experience.id, user.id)
 
       if (success) {
-        showToast('Reserva cancelada', 'success')
+        showToast(t(locale as Locale, 'premium_cancel_success'), 'success')
         
         // Recargar la experiencia
         const updatedExp = getPremiumExperienceById(experience.id, undefined, locale as Locale)
@@ -187,7 +188,7 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
           setHasReservation(false)
         }
       } else {
-        showToast('Error al cancelar la reserva', 'error')
+        showToast(t(locale as Locale, 'premium_cancel_error'), 'error')
       }
     } catch (error: any) {
       const errorMessage = error?.message || 'Error al cancelar la reserva'
@@ -211,7 +212,7 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
             className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6 transition-colors"
           >
             <ArrowLeftIcon className="w-5 h-5" />
-            <span>Volver a experiencias premium</span>
+            <span>{t(locale as Locale, 'premium_back')}</span>
           </Link>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -236,13 +237,13 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
 
               {/* Detalles */}
               <div className="bg-white rounded-2xl p-6 shadow-lg">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Detalles</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">{t(locale as Locale, 'premium_details')}</h2>
                 
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <MapPinIcon className="w-5 h-5 text-primary-600 mt-0.5" />
                     <div>
-                      <p className="font-semibold text-gray-900">Ubicación</p>
+                      <p className="font-semibold text-gray-900">{t(locale as Locale, 'premium_location')}</p>
                       <p className="text-gray-600">{experience.location}</p>
                     </div>
                   </div>
@@ -250,8 +251,8 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
                   <div className="flex items-start gap-3">
                     <ClockIcon className="w-5 h-5 text-primary-600 mt-0.5" />
                     <div>
-                      <p className="font-semibold text-gray-900">Fecha y hora</p>
-                      <p className="text-gray-600">{experience.date} a las {experience.time}</p>
+                      <p className="font-semibold text-gray-900">{t(locale as Locale, 'premium_date_time')}</p>
+                      <p className="text-gray-600">{experience.date} {t(locale as Locale, 'premium_card_at')} {experience.time}</p>
                     </div>
                   </div>
 
@@ -264,7 +265,7 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
                       )
                     ))}
                     <span className="text-gray-600">
-                      {experience.rating} ({experience.reviews} reseñas)
+                      {experience.rating} ({experience.reviews} {t(locale as Locale, 'premium_card_reviews')})
                     </span>
                   </div>
                 </div>
@@ -284,7 +285,7 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
 
                 {/* Highlights */}
                 <div className="mt-6">
-                  <h3 className="font-semibold text-gray-900 mb-3">Destacados</h3>
+                  <h3 className="font-semibold text-gray-900 mb-3">{t(locale as Locale, 'premium_highlights')}</h3>
                   <ul className="space-y-2">
                     {experience.highlights.map((item: any, idx: number) => (
                       <li key={idx} className="flex items-start gap-2">
@@ -338,9 +339,9 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
                 {/* Progreso */}
                 <div className="mb-6">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-gray-700 font-medium">Lugares disponibles</span>
+                    <span className="text-gray-700 font-medium">{t(locale as Locale, 'premium_card_available_seats')}</span>
                     <span className="text-primary-600 font-bold text-lg">
-                      {availableSeats} de {experience.maxSeats}
+                      {availableSeats} {t(locale as Locale, 'premium_card_seats_of')} {experience.maxSeats}
                     </span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
@@ -359,7 +360,7 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
                       onClick={handleCancel}
                       className="text-sm text-red-600 hover:text-red-700 font-medium"
                     >
-                      Cancelar reserva
+                      {t(locale as Locale, 'premium_cancel_reservation')}
                     </button>
                   </div>
                 ) : (
@@ -367,7 +368,7 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
                     {availableSeats > 0 ? (
                       <div className="mb-6">
                         <label className="block text-sm font-semibold text-gray-700 mb-2">
-                          Cantidad de lugares
+                          {t(locale as Locale, 'premium_seats_count')}
                         </label>
                         <div className="flex items-center gap-3">
                           <button
@@ -392,7 +393,7 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
                       </div>
                     ) : (
                       <div className="bg-yellow-50 border-2 border-yellow-500 rounded-lg p-4 mb-6">
-                        <p className="text-yellow-800 font-semibold">⚠️ No hay lugares disponibles</p>
+                        <p className="text-yellow-800 font-semibold">⚠️ {t(locale as Locale, 'premium_no_seats')}</p>
                         <p className="text-sm text-yellow-700 mt-1">Podés unirte a la lista de espera</p>
                       </div>
                     )}
@@ -402,7 +403,7 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
                       disabled={loading || availableSeats === 0 || !user}
                       className="w-full bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white py-4 rounded-lg font-bold text-lg transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      {loading ? 'Procesando...' : availableSeats > 0 ? 'Reservar y pagar' : 'Lista de espera'}
+                      {loading ? t(locale as Locale, 'premium_processing') : availableSeats > 0 ? t(locale as Locale, 'premium_reserve_and_pay') : t(locale as Locale, 'premium_card_waitlist')}
                     </button>
 
                     {!user && (

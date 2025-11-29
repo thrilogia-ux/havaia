@@ -3,6 +3,8 @@
 import { CalendarIcon } from '@heroicons/react/24/outline'
 import type { PremiumExperience, PremiumExperienceDate } from '@/lib/premium-experiences'
 import { getNextAvailableDate } from '@/lib/premium-experiences'
+import { useI18n } from '@/components/Providers'
+import { t, type Locale } from '@/lib/i18n'
 
 interface PremiumExperienceCalendarProps {
   experience: PremiumExperience
@@ -15,6 +17,7 @@ export default function PremiumExperienceCalendar({
   selectedDate,
   onDateSelect 
 }: PremiumExperienceCalendarProps) {
+  const { locale } = useI18n()
   if (!experience.dates || experience.dates.length === 0) {
     return null
   }
@@ -35,20 +38,25 @@ export default function PremiumExperienceCalendar({
   if (availableDates.length === 0) {
     return (
       <div className="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-4">
-        <p className="text-yellow-800 font-semibold">No hay fechas disponibles</p>
+        <p className="text-yellow-800 font-semibold">{t(locale as Locale, 'premium_no_seats')}</p>
       </div>
     )
   }
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
+    const localeMap: Record<Locale, string> = {
+      es: 'es-AR',
+      en: 'en-US',
+      he: 'he-IL'
+    }
     const options: Intl.DateTimeFormatOptions = { 
       weekday: 'short', 
       day: 'numeric', 
       month: 'short',
       year: 'numeric'
     }
-    return date.toLocaleDateString('es-AR', options)
+    return date.toLocaleDateString(localeMap[locale as Locale] || 'es-AR', options)
   }
 
   const isDateFull = (dateInfo: PremiumExperienceDate) => {
@@ -63,7 +71,7 @@ export default function PremiumExperienceCalendar({
     <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-gray-100">
       <div className="flex items-center gap-2 mb-4">
         <CalendarIcon className="w-5 h-5 text-primary-600" />
-        <h3 className="text-lg font-bold text-gray-900">Próximas fechas disponibles</h3>
+        <h3 className="text-lg font-bold text-gray-900">{t(locale as Locale, 'premium_next_dates')}</h3>
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -93,19 +101,19 @@ export default function PremiumExperienceCalendar({
                 </p>
                 {selected && (
                   <span className="text-xs bg-primary-500 text-white px-2 py-1 rounded-full">
-                    Seleccionada
+                    {t(locale as Locale, 'premium_card_selected')}
                   </span>
                 )}
               </div>
               <div className="flex items-center gap-2 text-sm">
                 {full ? (
-                  <span className="text-red-600 font-medium">Completo</span>
+                  <span className="text-red-600 font-medium">{t(locale as Locale, 'premium_card_full')}</span>
                 ) : (
                   <>
                     <span className="text-gray-600">
-                      {available} de {experience.maxSeats} lugares
+                      {available} {t(locale as Locale, 'premium_card_seats_of')} {experience.maxSeats} {t(locale as Locale, 'table_seats')}
                     </span>
-                    <span className="text-green-600 font-medium">Disponible</span>
+                    <span className="text-green-600 font-medium">{t(locale as Locale, 'exp_spots_free')}</span>
                   </>
                 )}
               </div>
@@ -116,7 +124,7 @@ export default function PremiumExperienceCalendar({
       
       {availableDates.length === 0 && (
         <p className="text-gray-500 text-sm mt-4 text-center">
-          No hay más fechas disponibles en las próximas semanas
+          {t(locale as Locale, 'premium_no_seats')}
         </p>
       )}
     </div>

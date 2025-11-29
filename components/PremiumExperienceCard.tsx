@@ -7,6 +7,8 @@ import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 import TableVisualization from './TableVisualization'
 import type { PremiumExperience, PremiumExperienceDate } from '@/lib/premium-experiences'
 import { getNextAvailableDate } from '@/lib/premium-experiences'
+import { useI18n } from '@/components/Providers'
+import { t, type Locale } from '@/lib/i18n'
 
 interface PremiumExperienceCardProps {
   experience: PremiumExperience
@@ -14,6 +16,7 @@ interface PremiumExperienceCardProps {
 }
 
 export default function PremiumExperienceCard({ experience, featured = false }: PremiumExperienceCardProps) {
+  const { locale } = useI18n()
   // Obtener fechas disponibles (futuras y ordenadas)
   const getAvailableDates = (): PremiumExperienceDate[] => {
     if (!experience.dates || experience.dates.length === 0) return []
@@ -59,17 +62,26 @@ export default function PremiumExperienceCard({ experience, featured = false }: 
   const reservedSeats = selectedDateInfo?.reservedSeats || experience.reservedSeats || 0
   const availableSeats = experience.maxSeats - reservedSeats
   const percentageFilled = (reservedSeats / experience.maxSeats) * 100
-  const displayDate = selectedDateInfo?.date || experience.date || 'Fecha por confirmar'
+  const getDisplayDate = () => {
+    const date = selectedDateInfo?.date || experience.date
+    return date || t(locale as Locale, 'premium_card_date_tbd')
+  }
+  const displayDate = getDisplayDate()
   const reservations = selectedDateInfo?.reservations || experience.reservations || []
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
+    const localeMap: Record<Locale, string> = {
+      es: 'es-AR',
+      en: 'en-US',
+      he: 'he-IL'
+    }
     const options: Intl.DateTimeFormatOptions = { 
       weekday: 'short', 
       day: 'numeric', 
       month: 'short'
     }
-    return date.toLocaleDateString('es-AR', options)
+    return date.toLocaleDateString(localeMap[locale as Locale] || 'es-AR', options)
   }
 
   const handleDateSelect = (dateInfo: PremiumExperienceDate) => {
@@ -92,7 +104,7 @@ export default function PremiumExperienceCard({ experience, featured = false }: 
         />
         {featured && (
           <div className="absolute top-4 left-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg">
-            ⭐ Destacada
+            {t(locale as Locale, 'premium_card_featured')}
           </div>
         )}
         <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm font-semibold">
@@ -116,7 +128,7 @@ export default function PremiumExperienceCard({ experience, featured = false }: 
               )
             ))}
             <span className="ml-2 text-sm text-gray-600">
-              {experience.rating} ({experience.reviews} reseñas)
+              {experience.rating} ({experience.reviews} {t(locale as Locale, 'premium_card_reviews')})
             </span>
           </div>
         </div>
@@ -137,7 +149,7 @@ export default function PremiumExperienceCard({ experience, featured = false }: 
                     onClick={() => setShowDateDropdown(!showDateDropdown)}
                     className="flex items-center gap-2 text-left hover:text-primary-600 transition-colors"
                   >
-                    <span>{formatDate(displayDate)} a las {experience.time}</span>
+                    <span>{formatDate(displayDate)} {t(locale as Locale, 'premium_card_at')} {experience.time}</span>
                     <ChevronDownIcon className={`w-4 h-4 transition-transform ${showDateDropdown ? 'rotate-180' : ''}`} />
                   </button>
                   
@@ -173,15 +185,15 @@ export default function PremiumExperienceCard({ experience, featured = false }: 
                                 <span className="text-sm">{formatDate(dateInfo.date)}</span>
                                 {isSelected && (
                                   <span className="text-xs bg-primary-500 text-white px-2 py-0.5 rounded-full">
-                                    Seleccionada
+                                    {t(locale as Locale, 'premium_card_selected')}
                                   </span>
                                 )}
                               </div>
                               <div className="text-xs mt-1">
                                 {isFull ? (
-                                  <span className="text-red-500">Completo</span>
+                                  <span className="text-red-500">{t(locale as Locale, 'premium_card_full')}</span>
                                 ) : (
-                                  <span className="text-gray-500">{available} lugares disponibles</span>
+                                  <span className="text-gray-500">{available} {t(locale as Locale, 'premium_card_seats_available')}</span>
                                 )}
                               </div>
                             </button>
@@ -192,7 +204,7 @@ export default function PremiumExperienceCard({ experience, featured = false }: 
                   )}
                 </div>
               ) : (
-                <span>{formatDate(displayDate)} a las {experience.time}</span>
+                <span>{formatDate(displayDate)} {t(locale as Locale, 'premium_card_at')} {experience.time}</span>
               )}
             </div>
           </div>
@@ -210,8 +222,8 @@ export default function PremiumExperienceCard({ experience, featured = false }: 
         {/* Progreso */}
         <div className="mb-4">
           <div className="flex items-center justify-between text-sm mb-2">
-            <span className="text-gray-700 font-medium">Lugares disponibles</span>
-            <span className="text-primary-600 font-bold">{availableSeats} de {experience.maxSeats}</span>
+            <span className="text-gray-700 font-medium">{t(locale as Locale, 'premium_card_available_seats')}</span>
+            <span className="text-primary-600 font-bold">{availableSeats} {t(locale as Locale, 'premium_card_seats_of')} {experience.maxSeats}</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
             <div
@@ -231,7 +243,7 @@ export default function PremiumExperienceCard({ experience, featured = false }: 
           href={`/experiencias-premium/${experience.id}${selectedDateInfo?.date ? `?date=${selectedDateInfo.date}` : ''}`}
           className="block w-full bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white text-center py-3 rounded-full font-semibold transition-all hover:shadow-lg"
         >
-          {availableSeats > 0 ? 'Reservar lugar' : 'Lista de espera'}
+          {availableSeats > 0 ? t(locale as Locale, 'premium_card_reserve_seat') : t(locale as Locale, 'premium_card_waitlist')}
         </Link>
       </div>
     </div>

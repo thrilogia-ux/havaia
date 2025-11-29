@@ -107,6 +107,12 @@ const MESSAGES: Record<Locale, Record<string, string>> = {
     premium_redirecting_payment: 'Redirigiendo al pago...',
     premium_experience_not_found: 'Experiencia no encontrada',
     premium_or_upgrade: 'O actualizá a Premium',
+    premium_includes: 'Incluye',
+    premium_reservation_confirmed: '✅ Tenés una reserva confirmada',
+    premium_waitlist_join: 'Podés unirte a la lista de espera',
+    premium_login_link: 'Iniciá sesión',
+    premium_to_reserve: 'para reservar',
+    premium_price_includes: 'El precio incluye la experiencia completa. Solo pagarás la propina en el lugar (opcional).',
     home_experiences_havaia_title: 'Experiencias Havaia Exclusivas en Buenos Aires',
     home_experiences_havaia_subtitle: 'Todas las experiencias están pensadas, curadas y únicas, porque se diseñaron solo para vos y con quien quieras compartirla. Las experiencias havaia, solo las encontrás en havaia.',
     see_more: 'Ver más',
@@ -544,6 +550,12 @@ const MESSAGES: Record<Locale, Record<string, string>> = {
     premium_redirecting_payment: 'Redirecting to payment...',
     premium_experience_not_found: 'Experience not found',
     premium_or_upgrade: 'Or upgrade to Premium',
+    premium_includes: 'Includes',
+    premium_reservation_confirmed: '✅ You have a confirmed reservation',
+    premium_waitlist_join: 'You can join the waitlist',
+    premium_login_link: 'Sign in',
+    premium_to_reserve: 'to reserve',
+    premium_price_includes: 'The price includes the complete experience. You will only pay the tip at the venue (optional).',
   },
   he: {
     // Header (hebreo, derecha a izquierda)
@@ -751,6 +763,12 @@ const MESSAGES: Record<Locale, Record<string, string>> = {
     premium_redirecting_payment: 'מעביר לתשלום...',
     premium_experience_not_found: 'חוויה לא נמצאה',
     premium_or_upgrade: 'או שדרג לפרימיום',
+    premium_includes: 'כולל',
+    premium_reservation_confirmed: '✅ יש לך הזמנה מאושרת',
+    premium_waitlist_join: 'אתה יכול להצטרף לרשימת המתנה',
+    premium_login_link: 'התחבר',
+    premium_to_reserve: 'כדי להזמין',
+    premium_price_includes: 'המחיר כולל את החוויה המלאה. תשלם רק טיפ במקום (אופציונלי).',
   },
 }
 

@@ -107,7 +107,7 @@ function PremiumExperienceDetailContent({ params }: { params: { id: string } }) 
         <Header />
         <div className="container mx-auto px-4 py-12 text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Cargando experiencia...</p>
+          <p className="mt-4 text-gray-600">{t(locale as Locale, 'exp_loading')}</p>
         </div>
       </div>
     )
@@ -272,7 +272,7 @@ function PremiumExperienceDetailContent({ params }: { params: { id: string } }) 
 
                 {/* Incluye */}
                 <div className="mt-6">
-                  <h3 className="font-semibold text-gray-900 mb-3">Incluye</h3>
+                  <h3 className="font-semibold text-gray-900 mb-3">{t(locale as Locale, 'premium_includes')}</h3>
                   <ul className="space-y-2">
                     {experience.includes.map((item: any, idx: number) => (
                       <li key={idx} className="flex items-start gap-2">
@@ -355,7 +355,7 @@ function PremiumExperienceDetailContent({ params }: { params: { id: string } }) 
                 {/* Reserva */}
                 {hasReservation ? (
                   <div className="bg-green-50 border-2 border-green-500 rounded-lg p-4 mb-6">
-                    <p className="text-green-800 font-semibold mb-2">✅ Tenés una reserva confirmada</p>
+                    <p className="text-green-800 font-semibold mb-2">{t(locale as Locale, 'premium_reservation_confirmed')}</p>
                     <button
                       onClick={handleCancel}
                       className="text-sm text-red-600 hover:text-red-700 font-medium"
@@ -394,7 +394,7 @@ function PremiumExperienceDetailContent({ params }: { params: { id: string } }) 
                     ) : (
                       <div className="bg-yellow-50 border-2 border-yellow-500 rounded-lg p-4 mb-6">
                         <p className="text-yellow-800 font-semibold">⚠️ {t(locale as Locale, 'premium_no_seats')}</p>
-                        <p className="text-sm text-yellow-700 mt-1">Podés unirte a la lista de espera</p>
+                        <p className="text-sm text-yellow-700 mt-1">{t(locale as Locale, 'premium_waitlist_join')}</p>
                       </div>
                     )}
 
@@ -409,8 +409,8 @@ function PremiumExperienceDetailContent({ params }: { params: { id: string } }) 
                     {!user && (
                       <p className="text-sm text-gray-600 text-center mt-4">
                         <Link href="/login" className="text-primary-600 hover:underline">
-                          Iniciá sesión
-                        </Link> para reservar
+                          {t(locale as Locale, 'premium_login_link')}
+                        </Link> {t(locale as Locale, 'premium_to_reserve')}
                       </p>
                     )}
                   </>
@@ -418,7 +418,7 @@ function PremiumExperienceDetailContent({ params }: { params: { id: string } }) 
 
                 <div className="mt-6 pt-6 border-t border-gray-200">
                   <p className="text-xs text-gray-500 text-center">
-                    El precio incluye la experiencia completa. Solo pagarás la propina en el lugar (opcional).
+                    {t(locale as Locale, 'premium_price_includes')}
                   </p>
                 </div>
               </div>

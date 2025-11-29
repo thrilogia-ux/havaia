@@ -20,6 +20,8 @@ import FavoriteButton from '@/components/FavoriteButton'
 import { getCurrentUser } from '@/lib/auth'
 import { experienciasAPI, paymentsAPI } from '@/lib/api'
 import { showToast } from '@/components/ToastContainer'
+import { useI18n } from '@/components/Providers'
+import { t, type Locale } from '@/lib/i18n'
 
 type Slot = {
   date: string
@@ -28,6 +30,7 @@ type Slot = {
 }
 
 export default function ExperienciaDetailPage({ params }: { params: { id: string } }) {
+  const { locale } = useI18n()
   const experienciaId = parseInt(params.id)
   const [experiencia, setExperiencia] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -87,7 +90,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
         <Header />
         <div className="container mx-auto px-4 py-12 text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Cargando experiencia...</p>
+          <p className="mt-4 text-gray-600">{t(locale as Locale, 'exp_loading_detail')}</p>
         </div>
       </div>
     )
@@ -98,9 +101,9 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
       <div className="min-h-screen bg-gray-50">
         <Header />
         <div className="container mx-auto px-4 py-12 text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Experiencia no encontrada</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">{t(locale as Locale, 'exp_not_found_detail')}</h1>
           <Link href="/experiencias" className="text-primary-600 hover:text-primary-700 font-semibold">
-            Volver a experiencias
+            {t(locale as Locale, 'exp_back_to_experiences')}
           </Link>
         </div>
       </div>
@@ -143,7 +146,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
                   />
                 ))}
                 <span className="ml-2 text-sm md:text-base">
-                  {experiencia.rating} ({experiencia.reviews} reseñas)
+                  {experiencia.rating} ({experiencia.reviews} {t(locale as Locale, 'exp_reviews')})
                 </span>
               </div>
             </div>
@@ -182,29 +185,29 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
                 <div className="flex items-center gap-3">
                   <MapPinIcon className="w-5 h-5 text-primary-600" />
                   <div>
-                    <p className="text-sm text-gray-600">Ubicación</p>
+                    <p className="text-sm text-gray-600">{t(locale as Locale, 'exp_location')}</p>
                     <p className="font-semibold">{experiencia.location}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <ClockIcon className="w-5 h-5 text-primary-600" />
                   <div>
-                    <p className="text-sm text-gray-600">Duración</p>
+                    <p className="text-sm text-gray-600">{t(locale as Locale, 'exp_duration')}</p>
                     <p className="font-semibold">{experiencia.duration}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <LanguageIcon className="w-5 h-5 text-primary-600" />
                   <div>
-                    <p className="text-sm text-gray-600">Idioma</p>
+                    <p className="text-sm text-gray-600">{t(locale as Locale, 'exp_language')}</p>
                     <p className="font-semibold">{experiencia.language}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
                   <UserGroupIcon className="w-5 h-5 text-primary-600" />
                   <div>
-                    <p className="text-sm text-gray-600">Cupos</p>
-                    <p className="font-semibold">{experiencia.spots.available} de {experiencia.spots.total} disponibles</p>
+                    <p className="text-sm text-gray-600">{t(locale as Locale, 'exp_spots')}</p>
+                    <p className="font-semibold">{experiencia.spots.available} {t(locale as Locale, 'exp_spots_detail', { total: experiencia.spots.total })}</p>
                   </div>
                 </div>
               </div>
@@ -212,13 +215,13 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
 
             {/* Descripción */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-2xl font-bold mb-4 text-gray-900">Descripción</h2>
+              <h2 className="text-2xl font-bold mb-4 text-gray-900">{t(locale as Locale, 'exp_description')}</h2>
               <p className="text-gray-700 leading-relaxed">{experiencia.description}</p>
             </div>
 
             {/* Itinerario */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-2xl font-bold mb-4 text-gray-900">Itinerario</h2>
+              <h2 className="text-2xl font-bold mb-4 text-gray-900">{t(locale as Locale, 'exp_itinerary')}</h2>
               <div className="space-y-3">
                 {experiencia.itinerary.map((item: any, idx: number) => (
                   <div key={idx} className="flex items-start gap-3">
@@ -234,7 +237,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
             {/* Incluye / No incluye */}
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-white rounded-xl shadow-sm p-6">
-                <h2 className="text-2xl font-bold mb-4 text-gray-900">Incluye</h2>
+                <h2 className="text-2xl font-bold mb-4 text-gray-900">{t(locale as Locale, 'exp_includes')}</h2>
                 <ul className="space-y-2">
                   {experiencia.includes.map((item: any, idx: number) => (
                     <li key={idx} className="flex items-center gap-2">
@@ -245,7 +248,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
                 </ul>
               </div>
               <div className="bg-white rounded-xl shadow-sm p-6">
-                <h2 className="text-2xl font-bold mb-4 text-gray-900">No incluye</h2>
+                <h2 className="text-2xl font-bold mb-4 text-gray-900">{t(locale as Locale, 'exp_not_includes')}</h2>
                 <ul className="space-y-2">
                   {experiencia.notIncludes.map((item: any, idx: number) => (
                     <li key={idx} className="flex items-center gap-2">
@@ -259,7 +262,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
 
             {/* Reseñas */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-2xl font-bold mb-4 text-gray-900">Reseñas ({experiencia.reviews})</h2>
+              <h2 className="text-2xl font-bold mb-4 text-gray-900">{t(locale as Locale, 'exp_reviews_title')} ({experiencia.reviews})</h2>
               <div className="space-y-4">
                 {reviews.map((review: any, idx: number) => (
                   <div key={idx} className="border-b border-gray-200 pb-4 last:border-0 last:pb-0">
@@ -285,7 +288,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
           <div className="space-y-6">
             {/* Calendario y Reserva */}
             <div className="bg-white rounded-xl shadow-sm p-6 sticky top-24 space-y-4">
-              <h2 className="text-xl font-bold text-gray-900">Fechas disponibles</h2>
+              <h2 className="text-xl font-bold text-gray-900">{t(locale as Locale, 'exp_dates_available')}</h2>
               <div className="space-y-3">
                 {slots.map((slot: any, idx: number) => (
                   <button
@@ -315,7 +318,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
 
               {/* Métodos de pago (simulados) */}
               <div className="pt-4 border-t border-gray-200 space-y-3">
-                <h3 className="font-semibold text-gray-900 text-sm">Método de pago</h3>
+                <h3 className="font-semibold text-gray-900 text-sm">{t(locale as Locale, 'exp_payment_method')}</h3>
                 <div className="grid grid-cols-3 gap-2 text-xs">
                   <button
                     onClick={() => setPaymentMethod('mercadopago')}
@@ -345,7 +348,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
                         : 'border-gray-200 text-gray-700 hover:border-primary-300'
                     }`}
                   >
-                    Tarjeta
+                    {t(locale as Locale, 'exp_payment_card')}
                   </button>
                 </div>
                 <p className="text-xs text-gray-500">
@@ -385,14 +388,14 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
                 disabled={isPaying}
                 className="block w-full bg-primary-500 hover:bg-primary-600 disabled:opacity-70 disabled:cursor-not-allowed text-white text-center py-3 rounded-lg font-semibold mb-1 transition-all hover-lift ripple shadow-lg"
               >
-                {isPaying ? 'Procesando pago...' : `Reservar y pagar $${experiencia.price}`}
+                {isPaying ? t(locale as Locale, 'exp_processing_payment') : `${t(locale as Locale, 'exp_reserve_and_pay').replace('${price}', `$${experiencia.price}`)}`}
               </button>
 
               <Link
                 href={`/grupos/crear?experiencia=${experiencia.id}`}
                 className="block w-full text-primary-600 hover:text-primary-700 text-center py-2 text-sm font-semibold"
               >
-                O crear un grupo personalizado →
+                {t(locale as Locale, 'exp_create_group')}
               </Link>
             </div>
 
@@ -401,7 +404,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
               <div className="bg-white rounded-xl shadow-sm p-6">
                 <div className="flex items-center gap-2 mb-4">
                   <ChatBubbleLeftRightIcon className="w-5 h-5 text-primary-600" />
-                  <h2 className="text-xl font-bold text-gray-900">Grupos activos</h2>
+                  <h2 className="text-xl font-bold text-gray-900">{t(locale as Locale, 'exp_active_groups')}</h2>
                 </div>
                 <div className="space-y-4">
                   {gruposActivos.map(grupo => (
@@ -410,13 +413,13 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
                       <p className="text-sm text-gray-600 mb-2">{grupo.fecha} - {grupo.horario}</p>
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-gray-600">
-                          {grupo.spots.disponibles} de {grupo.spots.total} cupos libres
+                          {grupo.spots.disponibles} {t(locale as Locale, 'exp_spots_detail', { total: grupo.spots.total })} {t(locale as Locale, 'exp_spots_free')}
                         </span>
                         <Link
                           href={`/grupos/${grupo.id}`}
                           className="text-primary-600 hover:text-primary-700 font-semibold text-sm"
                         >
-                          Unirme →
+                          {t(locale as Locale, 'exp_join')}
                         </Link>
                       </div>
                     </div>
@@ -427,7 +430,7 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
 
             {/* Perfil Anfitrión */}
             <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-xl font-bold mb-4 text-gray-900">Anfitrión</h2>
+              <h2 className="text-xl font-bold mb-4 text-gray-900">{t(locale as Locale, 'exp_host')}</h2>
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-16 h-16 bg-primary-500 rounded-full"></div>
                 <div>
@@ -435,18 +438,18 @@ export default function ExperienciaDetailPage({ params }: { params: { id: string
                     <p className="font-semibold text-gray-900">{experiencia.host.name}</p>
                     {experiencia.host.verified && (
                       <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full font-semibold">
-                        ✓ Verificado
+                        {t(locale as Locale, 'exp_verified')}
                       </span>
                     )}
                   </div>
                   <div className="flex items-center gap-1 mt-1">
                     <StarIconSolid className="w-4 h-4 text-yellow-400" />
-                    <span className="text-sm text-gray-600">{experiencia.host.rating} ({experiencia.host.experiences} experiencias)</span>
+                    <span className="text-sm text-gray-600">{experiencia.host.rating} ({experiencia.host.experiences} {t(locale as Locale, 'exp_host_experiences')})</span>
                   </div>
                 </div>
               </div>
               <div className="mb-4">
-                <p className="text-sm text-gray-600 mb-2">Idiomas:</p>
+                <p className="text-sm text-gray-600 mb-2">{t(locale as Locale, 'exp_host_languages')}</p>
                 <div className="flex flex-wrap gap-2">
                   {experiencia.host.languages.map((lang: any, idx: number) => (
                     <span key={idx} className="bg-primary-100 text-primary-700 text-xs px-2 py-1 rounded-full">

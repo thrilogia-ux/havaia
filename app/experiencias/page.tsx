@@ -16,19 +16,28 @@ import { experienciasData, type Experiencia } from '@/lib/data'
 import { experienciasAPI } from '@/lib/api'
 import { canAccessPremiumExperiences } from '@/lib/subscriptions'
 import FavoriteButton from '@/components/FavoriteButton'
-
-const categories = ['Todas', 'Gastronomía', 'Cultura', 'Vida Nocturna', 'Aventura']
+import { useI18n } from '@/components/Providers'
+import { t, type Locale } from '@/lib/i18n'
 
 export default function ExperienciasPage() {
+  const { locale } = useI18n()
   const [experiencias, setExperiencias] = useState<Experiencia[]>([])
   const [loading, setLoading] = useState(true)
   const [filters, setFilters] = useState({
-    category: 'Todas',
+    category: t(locale as Locale, 'exp_category_all'),
     search: '',
     language: '',
     minPrice: '',
     maxPrice: ''
   })
+
+  const categories = [
+    t(locale as Locale, 'exp_category_all'),
+    t(locale as Locale, 'exp_category_gastronomy'),
+    t(locale as Locale, 'exp_category_culture'),
+    t(locale as Locale, 'exp_category_nightlife'),
+    t(locale as Locale, 'exp_category_adventure')
+  ]
 
   useEffect(() => {
     loadExperiencias()
@@ -37,8 +46,9 @@ export default function ExperienciasPage() {
   const loadExperiencias = async () => {
     setLoading(true)
     try {
+      const allCategory = t(locale as Locale, 'exp_category_all')
       const data = await experienciasAPI.getAll({
-        category: filters.category !== 'Todas' ? filters.category : undefined,
+        category: filters.category !== allCategory ? filters.category : undefined,
         search: filters.search || undefined,
         language: filters.language || undefined,
         minPrice: filters.minPrice || undefined,
@@ -60,7 +70,7 @@ export default function ExperienciasPage() {
 
   const clearFilters = () => {
     setFilters({
-      category: 'Todas',
+      category: t(locale as Locale, 'exp_category_all'),
       search: '',
       language: '',
       minPrice: '',
@@ -76,10 +86,10 @@ export default function ExperienciasPage() {
         {/* Hero Section */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Experiencias en Buenos Aires
+            {t(locale as Locale, 'exp_page_title')}
           </h1>
           <p className="text-lg text-gray-600">
-            Descubrí actividades curadas especialmente para la comunidad israelí
+            {t(locale as Locale, 'exp_page_subtitle')}
           </p>
         </div>
 
@@ -89,7 +99,7 @@ export default function ExperienciasPage() {
             <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
               type="text"
-              placeholder="Buscar experiencias..."
+              placeholder={t(locale as Locale, 'exp_search_placeholder')}
               value={filters.search}
               onChange={(e) => handleFilterChange('search', e.target.value)}
               className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
@@ -102,14 +112,14 @@ export default function ExperienciasPage() {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-4">
               <FunnelIcon className="w-5 h-5 text-gray-600" />
-              <h2 className="font-semibold text-gray-900">Filtros</h2>
+              <h2 className="font-semibold text-gray-900">{t(locale as Locale, 'exp_filters_title')}</h2>
             </div>
-            {(filters.category !== 'Todas' || filters.search || filters.language || filters.minPrice || filters.maxPrice) && (
+            {(filters.category !== t(locale as Locale, 'exp_category_all') || filters.search || filters.language || filters.minPrice || filters.maxPrice) && (
               <button
                 onClick={clearFilters}
                 className="text-sm text-primary-600 hover:text-primary-700 font-semibold"
               >
-                Limpiar filtros
+                {t(locale as Locale, 'exp_clear_filters')}
               </button>
             )}
           </div>
@@ -136,27 +146,27 @@ export default function ExperienciasPage() {
               onChange={(e) => handleFilterChange('language', e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             >
-              <option value="">Todos los idiomas</option>
-              <option value="Hebreo">Hebreo</option>
-              <option value="Español">Español</option>
-              <option value="Inglés">Inglés</option>
+              <option value="">{t(locale as Locale, 'exp_language_all')}</option>
+              <option value="Hebreo">{t(locale as Locale, 'exp_language_hebrew')}</option>
+              <option value="Español">{t(locale as Locale, 'exp_language_spanish')}</option>
+              <option value="Inglés">{t(locale as Locale, 'exp_language_english')}</option>
             </select>
             <input
               type="number"
-              placeholder="Precio mínimo"
+              placeholder={t(locale as Locale, 'exp_price_min')}
               value={filters.minPrice}
               onChange={(e) => handleFilterChange('minPrice', e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
             <input
               type="number"
-              placeholder="Precio máximo"
+              placeholder={t(locale as Locale, 'exp_price_max')}
               value={filters.maxPrice}
               onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
             <div className="text-sm text-gray-600 flex items-center">
-              {experiencias.length} {experiencias.length === 1 ? 'experiencia encontrada' : 'experiencias encontradas'}
+              {experiencias.length} {experiencias.length === 1 ? t(locale as Locale, 'exp_found_single') : t(locale as Locale, 'exp_found_plural')}
             </div>
           </div>
         </div>
@@ -164,20 +174,20 @@ export default function ExperienciasPage() {
         {/* Carrusel Recomendado */}
         {experiencias.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Recomendado para vos</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">{t(locale as Locale, 'exp_recommended')}</h2>
             <div className="bg-gradient-to-r from-primary-500 to-secondary-500 rounded-xl p-8 text-white">
               <div className="max-w-2xl">
                 <h3 className="text-3xl font-bold mb-2">{experiencias[0].title}</h3>
                 <p className="text-primary-100 mb-4">{experiencias[0].category}</p>
                 <div className="flex items-center gap-6 mb-6">
                   <span className="text-3xl font-bold">${experiencias[0].price}</span>
-                  <span className="text-primary-100">⭐ {experiencias[0].rating} ({experiencias[0].reviews} reseñas)</span>
+                  <span className="text-primary-100">⭐ {experiencias[0].rating} ({experiencias[0].reviews} {t(locale as Locale, 'exp_reviews')})</span>
                 </div>
                 <Link
                   href={`/experiencias/${experiencias[0].id}`}
                   className="inline-block bg-white text-primary-600 hover:bg-gray-100 px-6 py-3 rounded-lg font-semibold transition-colors"
                 >
-                  Ver detalles
+                  {t(locale as Locale, 'exp_view_details')}
                 </Link>
               </div>
             </div>
@@ -187,7 +197,7 @@ export default function ExperienciasPage() {
         {/* Listado de Experiencias */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            {loading ? 'Cargando...' : experiencias.length > 0 ? 'Todas las experiencias' : 'No se encontraron experiencias'}
+            {loading ? t(locale as Locale, 'exp_loading') : experiencias.length > 0 ? t(locale as Locale, 'exp_all_experiences') : t(locale as Locale, 'exp_not_found')}
           </h2>
           {loading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -213,18 +223,18 @@ export default function ExperienciasPage() {
                       isPremiumExp ? 'opacity-75' : ''
                     }`}
                   >
-                    {isPremiumExp && (
+                      {isPremiumExp && (
                       <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 z-10 rounded-xl flex items-center justify-center">
                         <div className="bg-white/90 backdrop-blur-sm rounded-lg p-4 text-center shadow-lg">
                           <SparklesIcon className="w-8 h-8 text-yellow-500 mx-auto mb-2" />
-                          <p className="font-bold text-gray-900 mb-1">Experiencia Premium</p>
-                          <p className="text-sm text-gray-600 mb-3">Suscripción Premium requerida</p>
+                          <p className="font-bold text-gray-900 mb-1">{t(locale as Locale, 'exp_premium_title')}</p>
+                          <p className="text-sm text-gray-600 mb-3">{t(locale as Locale, 'exp_premium_required')}</p>
                           <Link
                             href="/planes"
                             className="bg-primary-500 hover:bg-primary-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
                             onClick={(e) => e.stopPropagation()}
                           >
-                            Ver planes
+                            {t(locale as Locale, 'exp_view_plans')}
                           </Link>
                         </div>
                       </div>
@@ -245,7 +255,7 @@ export default function ExperienciasPage() {
                         <div className="absolute top-4 left-4 z-20">
                           <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
                             <SparklesIcon className="w-3 h-3" />
-                            Premium
+                            {t(locale as Locale, 'exp_premium_badge')}
                           </div>
                         </div>
                       )}
@@ -284,13 +294,13 @@ export default function ExperienciasPage() {
                       </div>
                       <div className="flex items-center gap-2">
                         <UserGroupIcon className="w-4 h-4" />
-                        <span>{exp.spots.available} de {exp.spots.total} cupos disponibles</span>
+                        <span>{exp.spots.available} {t(locale as Locale, 'exp_spots_detail', { total: exp.spots.total })}</span>
                       </div>
                     </div>
 
                     <div className="flex items-center justify-between pt-4 border-t border-gray-200">
                       <span className="text-2xl font-bold text-gray-900">${exp.price}</span>
-                      <span className="text-primary-600 font-semibold">Ver más →</span>
+                      <span className="text-primary-600 font-semibold">{t(locale as Locale, 'exp_view_more')}</span>
                     </div>
                   </div>
                 </Link>
@@ -299,12 +309,12 @@ export default function ExperienciasPage() {
             </div>
           ) : (
             <div className="bg-white rounded-xl shadow-sm p-12 text-center">
-              <p className="text-gray-600 mb-4">No se encontraron experiencias con los filtros seleccionados.</p>
+              <p className="text-gray-600 mb-4">{t(locale as Locale, 'exp_not_found_filters')}</p>
               <button
                 onClick={clearFilters}
                 className="text-primary-600 hover:text-primary-700 font-semibold"
               >
-                Limpiar filtros y ver todas
+                {t(locale as Locale, 'exp_clear_and_view_all')}
               </button>
             </div>
           )}

@@ -255,7 +255,7 @@ export default function Home() {
                   className="w-full h-full object-contain max-w-full max-h-full"
                 />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">1. Descubrí</h3>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{t(locale as Locale, 'home_how_it_works_step1_title')}</h3>
               <p className="text-gray-600 text-lg">
                 {t(locale as Locale, 'home_how_it_works_step1_text')}
               </p>
@@ -268,7 +268,7 @@ export default function Home() {
                   className="w-full h-full object-contain max-w-full max-h-full"
                 />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">2. Conectá</h3>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{t(locale as Locale, 'home_how_it_works_step2_title')}</h3>
               <p className="text-gray-600 text-lg">
                 {t(locale as Locale, 'home_how_it_works_step2_text')}
               </p>
@@ -281,7 +281,7 @@ export default function Home() {
                   className="w-full h-full object-contain max-w-full max-h-full"
                 />
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900">3. Viví</h3>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">{t(locale as Locale, 'home_how_it_works_step3_title')}</h3>
               <p className="text-gray-600 text-lg">
                 {t(locale as Locale, 'home_how_it_works_step3_text')}
               </p>
@@ -316,7 +316,7 @@ export default function Home() {
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                     <div className="flex items-center justify-center gap-2 mb-2">
                       <SparklesIcon className="w-6 h-6 text-yellow-300" />
-                      <span className="text-2xl font-bold">Nivel {stats.level}</span>
+                      <span className="text-2xl font-bold">{t(locale as Locale, 'home_hero_level_value', { level: stats.level })}</span>
                     </div>
                     <p className="text-sm text-primary-100">{t(locale as Locale, 'home_hero_level')}</p>
                   </div>
@@ -386,16 +386,16 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
-                Nunca viajás solo
+                {t(locale as Locale, 'home_community_title')}
               </h2>
               <p className="text-lg text-gray-600 mb-6">
-                Ingresá a foros y chats temáticos, recibí tips al instante y coordiná planes con viajeros que comparten tus intereses.
+                {t(locale as Locale, 'home_community_text')}
               </p>
               <Link 
                 href="/comunidad" 
                 className="inline-block bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-full font-semibold transition-colors"
               >
-                Explorar foros
+                {t(locale as Locale, 'home_community_cta')}
               </Link>
             </div>
             <div className="bg-gray-100 rounded-xl p-8 border-2 border-gray-200">
@@ -404,21 +404,21 @@ export default function Home() {
                   <div className="w-10 h-10 bg-primary-500 rounded-full flex-shrink-0"></div>
                   <div className="flex-1">
                     <p className="font-semibold text-sm">Itai, Tel Aviv</p>
-                    <p className="text-gray-600 text-sm">¿Alguien conoce restaurantes kosher en Palermo?</p>
+                    <p className="text-gray-600 text-sm">{t(locale as Locale, 'home_example_community_question')}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 bg-secondary-500 rounded-full flex-shrink-0"></div>
                   <div className="flex-1">
                     <p className="font-semibold text-sm">Sara, Jerusalem</p>
-                    <p className="text-gray-600 text-sm">Recomiendo La Crespo en Villa Crespo, excelente!</p>
+                    <p className="text-gray-600 text-sm">{t(locale as Locale, 'home_example_community_reply')}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-10 h-10 bg-accent-500 rounded-full flex-shrink-0"></div>
                   <div className="flex-1">
                     <p className="font-semibold text-sm">David, Haifa</p>
-                    <p className="text-gray-600 text-sm">¿Armamos un grupo para el tour de tango mañana?</p>
+                    <p className="text-gray-600 text-sm">{t(locale as Locale, 'home_example_community_invite')}</p>
                   </div>
                 </div>
               </div>
@@ -440,23 +440,23 @@ export default function Home() {
               <span className="text-sm font-semibold">⭐ Plan Premium</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Desbloqueá Experiencias Exclusivas
+              {t(locale as Locale, 'home_premium_title')}
             </h2>
             <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
-              Accedé a experiencias premium, creá grupos ilimitados, obtené prioridad en reservas y disfrutá de beneficios exclusivos
+              {t(locale as Locale, 'home_premium_subtitle')}
             </p>
             <div className="grid md:grid-cols-3 gap-4 mb-8 max-w-3xl mx-auto">
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                 <div className="text-3xl mb-2">🚀</div>
-                <p className="font-semibold">Grupos Ilimitados</p>
+                <p className="font-semibold">{t(locale as Locale, 'home_premium_feature1')}</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                 <div className="text-3xl mb-2">⭐</div>
-                <p className="font-semibold">Experiencias Premium</p>
+                <p className="font-semibold">{t(locale as Locale, 'home_premium_feature2')}</p>
               </div>
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                 <div className="text-3xl mb-2">🎯</div>
-                <p className="font-semibold">Prioridad Total</p>
+                <p className="font-semibold">{t(locale as Locale, 'home_premium_feature3')}</p>
               </div>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -464,17 +464,17 @@ export default function Home() {
                 href="/planes"
                 className="bg-white text-orange-600 hover:bg-gray-100 px-8 py-4 rounded-full font-bold text-lg transition-all hover-lift shadow-2xl"
               >
-                Ver Planes Premium
+                {t(locale as Locale, 'home_premium_cta1')}
               </Link>
               <Link
                 href="/experiencias"
                 className="bg-white/20 hover:bg-white/30 text-white px-8 py-4 rounded-full font-bold text-lg transition-all hover-lift border-2 border-white/50"
               >
-                Explorar Experiencias
+                {t(locale as Locale, 'home_premium_cta2')}
               </Link>
             </div>
             <p className="mt-6 text-white/80 text-sm">
-              ✓ 7 días de prueba gratis • Sin tarjeta de crédito
+              {t(locale as Locale, 'home_premium_badge')}
             </p>
           </div>
         </div>
@@ -490,11 +490,11 @@ export default function Home() {
               <div className="space-y-4">
                 <div className="flex items-center gap-3 mb-4">
                   <ChatBubbleLeftRightIcon className="w-6 h-6 text-primary-600" />
-                  <h3 className="font-bold text-lg">Grupo: Tour Gastronómico</h3>
+                  <h3 className="font-bold text-lg">{t(locale as Locale, 'home_example_group_title')}</h3>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
                   <CalendarDaysIcon className="w-4 h-4" />
-                  <span>15 de Marzo, 19:00</span>
+                  <span>{t(locale as Locale, 'home_example_group_date')}</span>
                 </div>
                 <div className="flex -space-x-2 mb-4">
                   {[1,2,3,4].map(i => (
@@ -504,21 +504,21 @@ export default function Home() {
                     +2
                   </div>
                 </div>
-                <p className="text-sm text-gray-600">4/6 personas confirmadas</p>
+                <p className="text-sm text-gray-600">{t(locale as Locale, 'home_example_group_confirmed', { confirmed: 4, total: 6 })}</p>
               </div>
             </div>
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">
-                Grupos a tu medida
+                {t(locale as Locale, 'home_groups_title')}
               </h2>
               <p className="text-lg text-gray-600 mb-6">
-                Elegí cupos, definí roles, dividí pagos y mantené todo coordinado desde un solo chat. Creá grupos privados o unite a públicos.
+                {t(locale as Locale, 'home_groups_text')}
               </p>
               <Link 
                 href="/grupos/crear" 
                 className="inline-block bg-secondary-500 hover:bg-secondary-600 text-white px-6 py-3 rounded-full font-semibold transition-colors"
               >
-                Crear grupo
+                {t(locale as Locale, 'home_groups_cta')}
               </Link>
             </div>
           </div>
@@ -529,7 +529,7 @@ export default function Home() {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-            Explorá todas las secciones
+            {t(locale as Locale, 'home_sections_title')}
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             <Link
@@ -537,12 +537,12 @@ export default function Home() {
               className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white hover-lift group"
             >
               <div className="text-4xl mb-3">🔍</div>
-              <h3 className="text-xl font-bold mb-2">Experiencias</h3>
+              <h3 className="text-xl font-bold mb-2">{t(locale as Locale, 'home_section_experiences_title')}</h3>
               <p className="text-blue-100 text-sm mb-4">
-                Descubrí actividades curadas en Buenos Aires
+                {t(locale as Locale, 'home_section_experiences_text')}
               </p>
               <span className="text-blue-200 group-hover:text-white font-semibold text-sm">
-                Explorar →
+                {t(locale as Locale, 'home_section_explore')}
               </span>
             </Link>
 
@@ -551,12 +551,12 @@ export default function Home() {
               className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white hover-lift group"
             >
               <div className="text-4xl mb-3">👥</div>
-              <h3 className="text-xl font-bold mb-2">Grupos</h3>
+              <h3 className="text-xl font-bold mb-2">{t(locale as Locale, 'home_section_groups_title')}</h3>
               <p className="text-green-100 text-sm mb-4">
-                Creá o uníte a grupos de viajeros
+                {t(locale as Locale, 'home_section_groups_text')}
               </p>
               <span className="text-green-200 group-hover:text-white font-semibold text-sm">
-                Ver grupos →
+                {t(locale as Locale, 'home_section_groups_cta')}
               </span>
             </Link>
 
@@ -565,12 +565,12 @@ export default function Home() {
               className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-6 text-white hover-lift group"
             >
               <div className="text-4xl mb-3">💬</div>
-              <h3 className="text-xl font-bold mb-2">Comunidad</h3>
+              <h3 className="text-xl font-bold mb-2">{t(locale as Locale, 'home_section_community_title')}</h3>
               <p className="text-purple-100 text-sm mb-4">
-                Conectá con otros viajeros
+                {t(locale as Locale, 'home_section_community_text')}
               </p>
               <span className="text-purple-200 group-hover:text-white font-semibold text-sm">
-                Participar →
+                {t(locale as Locale, 'home_section_community_cta')}
               </span>
             </Link>
 
@@ -579,12 +579,12 @@ export default function Home() {
               className="bg-gradient-to-br from-accent-400 to-accent-500 rounded-xl p-6 text-white hover-lift group border-2 border-accent-300"
             >
               <div className="text-4xl mb-3">⭐</div>
-              <h3 className="text-xl font-bold mb-2">Planes Premium</h3>
+              <h3 className="text-xl font-bold mb-2">{t(locale as Locale, 'home_section_premium_title')}</h3>
               <p className="text-yellow-100 text-sm mb-4">
-                Desbloqueá todas las funcionalidades
+                {t(locale as Locale, 'home_section_premium_text')}
               </p>
               <span className="text-yellow-200 group-hover:text-white font-semibold text-sm">
-                Ver planes →
+                {t(locale as Locale, 'home_section_premium_cta')}
               </span>
             </Link>
           </div>
@@ -596,12 +596,12 @@ export default function Home() {
               className="bg-gradient-to-br from-red-500 to-pink-600 rounded-xl p-6 text-white hover-lift group"
             >
               <div className="text-4xl mb-3">❤️</div>
-              <h3 className="text-xl font-bold mb-2">Favoritos</h3>
+              <h3 className="text-xl font-bold mb-2">{t(locale as Locale, 'home_section_favorites_title')}</h3>
               <p className="text-red-100 text-sm mb-4">
-                Tus experiencias guardadas
+                {t(locale as Locale, 'home_section_favorites_text')}
               </p>
               <span className="text-red-200 group-hover:text-white font-semibold text-sm">
-                Ver favoritos →
+                {t(locale as Locale, 'home_section_favorites_cta')}
               </span>
             </Link>
 
@@ -610,12 +610,12 @@ export default function Home() {
               className="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-xl p-6 text-white hover-lift group"
             >
               <div className="text-4xl mb-3">🏆</div>
-              <h3 className="text-xl font-bold mb-2">Desafíos</h3>
+              <h3 className="text-xl font-bold mb-2">{t(locale as Locale, 'home_section_challenges_title')}</h3>
               <p className="text-indigo-100 text-sm mb-4">
-                Completá desafíos semanales
+                {t(locale as Locale, 'home_section_challenges_text')}
               </p>
               <span className="text-indigo-200 group-hover:text-white font-semibold text-sm">
-                Ver desafíos →
+                {t(locale as Locale, 'home_section_challenges_cta')}
               </span>
             </Link>
 
@@ -624,12 +624,12 @@ export default function Home() {
               className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-6 text-white hover-lift group"
             >
               <div className="text-4xl mb-3">📊</div>
-              <h3 className="text-xl font-bold mb-2">Ranking</h3>
+              <h3 className="text-xl font-bold mb-2">{t(locale as Locale, 'home_section_leaderboard_title')}</h3>
               <p className="text-amber-100 text-sm mb-4">
-                Competí con otros usuarios
+                {t(locale as Locale, 'home_section_leaderboard_text')}
               </p>
               <span className="text-amber-200 group-hover:text-white font-semibold text-sm">
-                Ver ranking →
+                {t(locale as Locale, 'home_section_leaderboard_cta')}
               </span>
             </Link>
 
@@ -639,12 +639,12 @@ export default function Home() {
                 className="bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl p-6 text-white hover-lift group"
               >
                 <div className="text-4xl mb-3">🎯</div>
-                <h3 className="text-xl font-bold mb-2">Dashboard</h3>
+                <h3 className="text-xl font-bold mb-2">{t(locale as Locale, 'home_section_dashboard_title')}</h3>
                 <p className="text-cyan-100 text-sm mb-4">
-                  Tu progreso y estadísticas
+                  {t(locale as Locale, 'home_section_dashboard_text')}
                 </p>
                 <span className="text-cyan-200 group-hover:text-white font-semibold text-sm">
-                  Ir al dashboard →
+                  {t(locale as Locale, 'home_section_dashboard_cta')}
                 </span>
               </Link>
             )}
@@ -656,7 +656,7 @@ export default function Home() {
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
-            Lo que dicen nuestros viajeros
+            {t(locale as Locale, 'home_testimonials_title')}
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
@@ -685,16 +685,16 @@ export default function Home() {
           <div className="max-w-4xl mx-auto text-center">
             <ShieldCheckIcon className="w-16 h-16 mx-auto mb-6" />
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Seguridad y soporte
+              {t(locale as Locale, 'home_security_title')}
             </h2>
             <p className="text-xl mb-8 text-primary-100">
-              Anfitriones verificados, moderación bilingüe y asistencia 24/7 para cualquier imprevisto durante tu viaje.
+              {t(locale as Locale, 'home_security_text')}
             </p>
             <Link 
               href="/soporte" 
               className="inline-block bg-white text-primary-600 hover:bg-gray-100 px-8 py-4 rounded-full font-semibold text-lg transition-colors"
             >
-              Contactar soporte
+              {t(locale as Locale, 'home_security_cta')}
             </Link>
           </div>
         </div>
@@ -723,7 +723,7 @@ function Footer() {
               />
             </Link>
             <p className="text-gray-400 text-sm">
-              Plataforma de experiencias únicas
+              {t(locale as Locale, 'footer_tagline')}
             </p>
             
             {/* Redes sociales */}
@@ -784,24 +784,24 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Soporte</h4>
+            <h4 className="font-semibold mb-4">{t(locale as Locale, 'footer_support')}</h4>
             <ul className="space-y-2 text-gray-400 text-sm">
-              <li><Link href="/faq" className="hover:text-white transition-colors">Preguntas frecuentes</Link></li>
-              <li><Link href="/soporte" className="hover:text-white transition-colors">Contacto 24/7</Link></li>
-              <li><Link href="/seguridad" className="hover:text-white transition-colors">Seguridad</Link></li>
+              <li><Link href="/faq" className="hover:text-white transition-colors">{t(locale as Locale, 'footer_faq')}</Link></li>
+              <li><Link href="/soporte" className="hover:text-white transition-colors">{t(locale as Locale, 'footer_contact')}</Link></li>
+              <li><Link href="/seguridad" className="hover:text-white transition-colors">{t(locale as Locale, 'footer_security')}</Link></li>
             </ul>
           </div>
           <div>
-            <h4 className="font-semibold mb-4">Legal</h4>
+            <h4 className="font-semibold mb-4">{t(locale as Locale, 'footer_legal')}</h4>
             <ul className="space-y-2 text-gray-400 text-sm mb-6">
-              <li><Link href="/terminos-y-condiciones" className="hover:text-white transition-colors">Términos y condiciones</Link></li>
-              <li><Link href="/politica-de-privacidad" className="hover:text-white transition-colors">Política de privacidad</Link></li>
-              <li><Link href="/condiciones-del-servicio" className="hover:text-white transition-colors">Condiciones del servicio</Link></li>
+              <li><Link href="/terminos-y-condiciones" className="hover:text-white transition-colors">{t(locale as Locale, 'footer_terms')}</Link></li>
+              <li><Link href="/politica-de-privacidad" className="hover:text-white transition-colors">{t(locale as Locale, 'footer_privacy')}</Link></li>
+              <li><Link href="/condiciones-del-servicio" className="hover:text-white transition-colors">{t(locale as Locale, 'footer_service')}</Link></li>
             </ul>
             
             {/* Selector de idioma con banderas */}
             <div>
-              <h4 className="font-semibold mb-3">Idioma</h4>
+              <h4 className="font-semibold mb-3">{t(locale as Locale, 'footer_language')}</h4>
               <div className="flex flex-col gap-2">
                 <button
                   onClick={() => setLocale('es')}
@@ -841,7 +841,7 @@ function Footer() {
           </div>
         </div>
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
-          <p>&copy; 2024 Havaia. Todos los derechos reservados.</p>
+          <p>&copy; 2024 Havaia. {t(locale as Locale, 'footer_copyright')}.</p>
         </div>
       </div>
     </footer>

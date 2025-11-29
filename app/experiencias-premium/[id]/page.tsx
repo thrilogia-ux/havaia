@@ -42,9 +42,12 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
     try {
       setPageLoading(true)
       
-      // Leer fecha de la URL si está presente
-      const urlParams = new URLSearchParams(window.location.search)
-      const dateFromUrl = urlParams.get('date')
+      // Leer fecha de la URL si está presente (solo en el cliente)
+      let dateFromUrl: string | null = null
+      if (typeof window !== 'undefined') {
+        const urlParams = new URLSearchParams(window.location.search)
+        dateFromUrl = urlParams.get('date')
+      }
       
       // Usar la función local directamente, con fecha si está en la URL y traducciones
       const exp = getPremiumExperienceById(experienceId, dateFromUrl || undefined, locale as Locale)

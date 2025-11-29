@@ -45,6 +45,8 @@ export default function PostCard({ post, onLike, onComment, onShare }: PostCardP
   }
 
   const handleShare = () => {
+    if (typeof window === 'undefined') return
+    
     if (navigator.share) {
       navigator.share({
         title: post.title,
@@ -64,6 +66,7 @@ export default function PostCard({ post, onLike, onComment, onShare }: PostCardP
   }
 
   const copyToClipboard = () => {
+    if (typeof window === 'undefined') return
     const url = `${window.location.origin}/comunidad?post=${post.id}`
     navigator.clipboard.writeText(url)
     showToast('Link copiado al portapapeles', 'success')

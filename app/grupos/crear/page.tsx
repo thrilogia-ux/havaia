@@ -67,7 +67,9 @@ function CrearGrupoContent() {
     if (!canCreateUnlimitedGroups() && gruposCreados >= limite) {
       showToast(`Llegaste al límite de ${limite} grupos por mes. ¡Actualizá a Premium para grupos ilimitados!`, 'warning', 6000)
       setTimeout(() => {
-        window.location.href = '/planes'
+        if (typeof window !== 'undefined') {
+          window.location.href = '/planes'
+        }
       }, 2000)
       return
     }

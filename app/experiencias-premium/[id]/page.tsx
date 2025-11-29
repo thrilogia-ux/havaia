@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useEffect, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Header from '@/components/Header'
 import TableVisualization from '@/components/TableVisualization'
 import { getPremiumExperienceById, reservePremiumExperience, cancelPremiumReservation, getNextAvailableDate } from '@/lib/premium-experiences'
@@ -20,8 +20,9 @@ import {
 import { StarIcon as StarIconOutline } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 
-export default function PremiumExperienceDetailPage({ params }: { params: { id: string } }) {
+function PremiumExperienceDetailContent({ params }: { params: { id: string } }) {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { locale } = useI18n()
   const experienceId = parseInt(params.id)
   const user = getCurrentUser()
@@ -42,12 +43,8 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
     try {
       setPageLoading(true)
       
-      // Leer fecha de la URL si está presente (solo en el cliente)
-      let dateFromUrl: string | null = null
-      if (typeof window !== 'undefined') {
-        const urlParams = new URLSearchParams(window.location.search)
-        dateFromUrl = urlParams.get('date')
-      }
+      // Leer fecha de la URL usando useSearchParams (compatible con SSR)
+      const dateFromUrl = searchParams.get('date')
       
       // Usar la función local directamente, con fecha si está en la URL y traducciones
       const exp = getPremiumExperienceById(experienceId, dateFromUrl || undefined, locale as Locale)
@@ -430,6 +427,18 @@ export default function PremiumExperienceDetailPage({ params }: { params: { id: 
         </div>
       </div>
     </div>
+  )
+}
+
+export default function PremiumExperienceDetailPage({ params }: { params: { id: string } }) {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+      </div>
+    }>
+      <PremiumExperienceDetailContent params={params} />
+    </Suspense>
   )
 }
 

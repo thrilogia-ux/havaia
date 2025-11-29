@@ -4,11 +4,22 @@
 import fs from 'fs'
 import path from 'path'
 
-const DATA_DIR = path.join(process.cwd(), 'data')
+// En Vercel/serverless, usar /tmp (único directorio escribible)
+// En desarrollo, usar el directorio del proyecto
+const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME
+const DATA_DIR = isServerless 
+  ? '/tmp/data' 
+  : path.join(process.cwd(), 'data')
 
-// Asegurar que el directorio existe
-if (!fs.existsSync(DATA_DIR)) {
-  fs.mkdirSync(DATA_DIR, { recursive: true })
+// Asegurar que el directorio existe (solo si es posible)
+try {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true })
+  }
+} catch (error) {
+  // Si no se puede crear el directorio (ej: en serverless sin /tmp), 
+  // continuar sin él - las funciones devolverán datos por defecto
+  console.warn('No se pudo crear el directorio de datos:', error)
 }
 
 // Archivos de datos
@@ -40,9 +51,22 @@ function readFile<T>(filePath: string, defaultValue: T[]): T[] {
 
 function writeFile<T>(filePath: string, data: T[]): void {
   try {
+    // Asegurar que el directorio existe antes de escribir
+    const dir = path.dirname(filePath)
+    if (!fs.existsSync(dir)) {
+      try {
+        fs.mkdirSync(dir, { recursive: true })
+      } catch (mkdirError) {
+        // Si no se puede crear el directorio, no escribir
+        console.warn(`No se pudo crear el directorio ${dir}, omitiendo escritura`)
+        return
+      }
+    }
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8')
   } catch (error) {
-    console.error(`Error writing ${filePath}:`, error)
+    // En entornos serverless, la escritura puede fallar silenciosamente
+    // Los datos se mantendrán en memoria durante la ejecución
+    console.warn(`Error writing ${filePath}:`, error)
   }
 }
 

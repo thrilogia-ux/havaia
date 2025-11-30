@@ -18,7 +18,8 @@ import {
   HeartIcon,
   ChatBubbleLeftRightIcon,
   CalendarDaysIcon,
-  ShieldCheckIcon
+  ShieldCheckIcon,
+  MapPinIcon
 } from '@heroicons/react/24/outline'
 import { useI18n } from '@/components/Providers'
 import { t, type Locale } from '@/lib/i18n'
@@ -26,6 +27,7 @@ import { experienciasData } from '@/lib/data'
 import { experienciasAPI } from '@/lib/api'
 import { getPremiumExperiences, getNextAvailableDate } from '@/lib/premium-experiences'
 import PremiumExperienceCard from '@/components/PremiumExperienceCard'
+import { getFeaturedAccommodations } from '@/lib/accommodations'
 
 // Componente de carrusel de experiencias
 function ExperiencesCarousel({ experiences, locale }: { experiences: typeof experienciasData, locale: Locale }) {
@@ -249,7 +251,81 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      
+      {/* Sección Alojamientos - DESPUÉS DE EXPERIENCIAS */}
+      <section className="py-20 bg-gradient-to-br from-primary-50 via-secondary-50 to-primary-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+              {t(locale as Locale, 'home_accommodations_title')}
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              {t(locale as Locale, 'home_accommodations_subtitle')}
+            </p>
+          </div>
+          
+          {getFeaturedAccommodations().length > 0 && (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto mb-8">
+              {getFeaturedAccommodations().slice(0, 3).map((acc) => (
+                <Link
+                  key={acc.id}
+                  href={`/alojamientos/${acc.id}`}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all hover-lift group"
+                >
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={acc.images[0]}
+                      alt={acc.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement
+                        target.src = 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop'
+                      }}
+                    />
+                    {acc.featured && (
+                      <div className="absolute top-4 left-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full font-bold text-xs shadow-lg">
+                        ⭐ {t(locale as Locale, 'acc_featured')}
+                      </div>
+                    )}
+                    <div className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                      ${acc.pricePerNight.toLocaleString('es-AR')}/noche
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <MapPinIcon className="w-4 h-4 text-gray-400" />
+                      <span className="text-sm text-gray-500">{acc.location}</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+                      {acc.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                      {acc.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1">
+                        <span className="text-yellow-400">★</span>
+                        <span className="text-sm font-semibold text-gray-700">{acc.rating}</span>
+                        <span className="text-sm text-gray-500">({acc.reviews})</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+          
+          <div className="text-center">
+            <Link
+              href="/alojamientos"
+              className="inline-block bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all hover:shadow-xl"
+            >
+              {t(locale as Locale, 'home_accommodations_cta')} →
+            </Link>
+          </div>
+        </div>
+      </section>
+      
       {/* Cómo funciona - SEGUNDA */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">

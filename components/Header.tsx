@@ -79,6 +79,13 @@ export default function Header() {
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 transition-all group-hover:w-full pointer-events-none"></span>
               </button>
               <button
+                onClick={() => handleNavigation('/alojamientos')}
+                className="text-gray-700 hover:text-primary-600 font-semibold transition-all hover:scale-105 relative group py-2 cursor-pointer"
+              >
+                {t(locale, 'nav_accommodations')}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-secondary-500 transition-all group-hover:w-full pointer-events-none"></span>
+              </button>
+              <button
                 onClick={() => handleNavigation('/challenges')}
                 className="text-gray-700 hover:text-primary-600 font-semibold transition-all hover:scale-105 relative group py-2 cursor-pointer"
               >
@@ -208,6 +215,12 @@ export default function Header() {
                 className="block w-full text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors cursor-pointer"
               >
                 {t(locale, 'nav_groups')}
+              </button>
+              <button
+                onClick={() => handleNavigation('/alojamientos')}
+                className="block w-full text-left text-gray-700 hover:text-primary-600 font-semibold py-2 transition-colors cursor-pointer"
+              >
+                {t(locale, 'nav_accommodations')}
               </button>
               <button
                 onClick={() => handleNavigation('/challenges')}
